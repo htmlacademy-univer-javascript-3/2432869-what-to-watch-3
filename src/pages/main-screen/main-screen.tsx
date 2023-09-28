@@ -25,7 +25,7 @@ export default function MainScreen({ promoFilmName, promoFilmGenre, promoFilmRel
     ></SmallFilmCard>
   ));
   return (
-    <div>
+    <>
       <section className="film-card">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
@@ -147,6 +147,6 @@ export default function MainScreen({ promoFilmName, promoFilmGenre, promoFilmRel
           </div>
         </footer>
       </div>
-    </div>
+    </>
   );
 }
