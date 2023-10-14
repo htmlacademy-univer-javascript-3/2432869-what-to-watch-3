@@ -1,29 +1,15 @@
-/* eslint-disable react/jsx-closing-tag-location */
-import { smallFilmCardsInfo } from './small-film-cards-info';
-import { MainScreenProps } from '../../types/main-screen-props';
-import { SmallFilmCardProps } from '../../types/small-film-card-props';
+import { GenreLink } from '../../components/genre-link';
+import { SmallFilmCard } from '../../components/small-film-card';
+import { filmGenres } from '../../mocks/film-genres';
+import { smallFilmCardsInfo } from '../../mocks/small-film-cards-info';
 
-export function SmallFilmCard({ filmImageSource, filmName }: SmallFilmCardProps): JSX.Element {
-  return (
-    <article className="small-film-card catalog__films-card">
-      <div className="small-film-card__image">
-        <img src={filmImageSource} alt={filmName} width="280" height="175" />
-      </div>
-      <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{ filmName }</a>
-      </h3>
-    </article>
-  );
+export type MainScreenProps = {
+  promoFilmName: string;
+  promoFilmGenre: string;
+  promoFilmReleaseDate: string;
 }
 
 export default function MainScreen({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }: MainScreenProps): JSX.Element {
-  const smallFilmCards = smallFilmCardsInfo.map(({ filmImageSource, filmName }) => (
-    <SmallFilmCard
-      filmImageSource={`img/${ filmImageSource}`}
-      filmName={filmName}
-      key={filmName}
-    ></SmallFilmCard>
-  ));
   return (
     <>
       <section className="film-card">
@@ -92,40 +78,15 @@ export default function MainScreen({ promoFilmName, promoFilmGenre, promoFilmRel
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
-            </li>
+            { filmGenres.map(({ genre, additionalClasses }) =>
+              <GenreLink key={genre} genre={genre} additionalClasses={additionalClasses}></GenreLink>
+            ) }
           </ul>
 
           <div className="catalog__films-list">
-            { smallFilmCards }
+            { smallFilmCardsInfo.map(({ filmImageSource, filmName }) =>
+              <SmallFilmCard key={filmName} filmImageSource={`img/${ filmImageSource}`} filmName={filmName}></SmallFilmCard>
+            ) }
           </div>
 
           <div className="catalog__more">

@@ -1,5 +1,9 @@
 import { Navigate } from 'react-router-dom';
-import { PrivateRouteProps } from './private-route-props';
+import { PropsWithChildren } from 'react';
+
+export type PrivateRouteProps = PropsWithChildren<{
+  authStatus: boolean;
+}>;
 
 export default function PrivateRoute({ authStatus, children }: PrivateRouteProps): JSX.Element {
   return (
