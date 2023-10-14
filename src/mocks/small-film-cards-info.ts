@@ -1,4 +1,9 @@
-export const smallFilmCardsInfo = [
+export type SmallFilmCardInfo = {
+  filmImageSource: string;
+  filmName: string;
+}
+
+export const smallFilmCardsInfo: SmallFilmCardInfo[] = [
   {
     filmImageSource: 'fantastic-beasts-the-crimes-of-grindelwald.jpg',
     filmName: 'Fantastic Beasts: The Crimes of Grindelwald',

@@ -1,15 +1,18 @@
-import { GenreLink } from '../../components/genre-link';
+import { GenreLink } from '../../components/film-genre-link';
 import { SmallFilmCard } from '../../components/small-film-card';
-import { filmGenres } from '../../mocks/film-genres';
-import { smallFilmCardsInfo } from '../../mocks/small-film-cards-info';
+import { FilmGenreLink } from '../../mocks/film-genre-links';
+import { SmallFilmCardInfo } from '../../mocks/small-film-cards-info';
 
 export type MainScreenProps = {
   promoFilmName: string;
   promoFilmGenre: string;
   promoFilmReleaseDate: string;
+  filmGenreLinks: FilmGenreLink[];
+  smallFilmCardsInfo: SmallFilmCardInfo[];
 }
 
-export default function MainScreen({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }: MainScreenProps): JSX.Element {
+export default function MainScreen({ promoFilmName, promoFilmGenre, promoFilmReleaseDate,
+  filmGenreLinks, smallFilmCardsInfo }: MainScreenProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -78,7 +81,7 @@ export default function MainScreen({ promoFilmName, promoFilmGenre, promoFilmRel
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            { filmGenres.map(({ genre, additionalClasses }) =>
+            { filmGenreLinks.map(({ genre, additionalClasses }) =>
               <GenreLink key={genre} genre={genre} additionalClasses={additionalClasses}></GenreLink>
             ) }
           </ul>

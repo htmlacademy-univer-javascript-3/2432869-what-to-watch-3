@@ -1,4 +1,9 @@
-export const filmGenres = [
+export type FilmGenreLink = {
+  genre: string;
+  additionalClasses?: string;
+}
+
+export const filmGenreLinks: FilmGenreLink[] = [
   {
     genre: 'All genres',
     additionalClasses: 'catalog__genres-item--active',
