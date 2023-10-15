@@ -9,6 +9,6 @@ export default function PrivateRoute({ authStatus, children }: PrivateRouteProps
   return (
     authStatus
       ? children as JSX.Element
-      : <Navigate to={'/login'}></Navigate>
+      : <Navigate to={'/login'} />
   );
 }

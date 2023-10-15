@@ -1,20 +1,20 @@
-export type FilmGenreLink = {
+export type FilmGenresData = {
   genre: string;
   additionalClasses?: string;
 }
 
-export const filmGenreLinks: FilmGenreLink[] = [
+export const filmGenresData: FilmGenresData[] = [
   {
     genre: 'All genres',
     additionalClasses: 'catalog__genres-item--active',
   },
-  { genre: 'Comedies', },
+  { genre: 'Comedy', },
   { genre: 'Crime', },
   { genre: 'Documentary', },
-  { genre: 'Dramas', },
+  { genre: 'Drama', },
   { genre: 'Horror', },
   { genre: 'Kids & Family', },
   { genre: 'Romance', },
   { genre: 'Sci-Fi', },
-  { genre: 'Thrillers', },
+  { genre: 'Thriller', },
 ];

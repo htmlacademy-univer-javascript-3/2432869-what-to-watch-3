@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app';
-import { SETTINGS } from './app-settings';
-import { filmGenreLinks } from './mocks/film-genre-links';
-import { smallFilmCardsInfo } from './mocks/small-film-cards-info';
+import App from './app';
+import { PromoFilmData } from './mocks/promo-film-data';
+import { PlayerData } from './mocks/player-data';
+import { filmGenresData } from './mocks/film-genres-data';
+import { filmsData } from './mocks/films-data';
 
 
 const root = ReactDOM.createRoot(
@@ -12,6 +13,14 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App {...SETTINGS} filmGenreLinks={filmGenreLinks} smallFilmCardsInfo={smallFilmCardsInfo}></App>
+    <App
+      {...PromoFilmData}
+      {...PlayerData}
+      ratingWidth={10}
+      userFilmsCount={9}
+      filmsLikeThisCount={4}
+      filmGenresData={filmGenresData}
+      filmsData={filmsData}
+    />
   </React.StrictMode>
 );
