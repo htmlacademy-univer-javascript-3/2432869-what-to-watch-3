@@ -1,4 +1,4 @@
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, generatePath, useParams } from 'react-router-dom';
 import AddReviewForm, { AddReviewFormProps } from '../../components/add-review-form';
 import { FilmData } from '../../mocks/films-data';
 import Screen404 from '../404-screen/404-screen';
@@ -34,10 +34,10 @@ export default function AddReviewScreen({ ratingWidth, filmsData }: AddReviewScr
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <NavLink to={ROUTES.film.getDynamicPath(filmData.id)} className="breadcrumbs__link">{ filmData.name }</NavLink>
+                <NavLink to={generatePath(ROUTES.film.fullPath, {id: filmData.id})} className="breadcrumbs__link">{ filmData.name }</NavLink>
               </li>
               <li className="breadcrumbs__item">
-                <NavLink to={ROUTES.filmReview.getDynamicPath(filmData.id)} className="breadcrumbs__link">Add review</NavLink>
+                <NavLink to={generatePath(ROUTES.filmReview.fullPath, {id: filmData.id})} className="breadcrumbs__link">Add review</NavLink>
               </li>
             </ul>
           </nav>

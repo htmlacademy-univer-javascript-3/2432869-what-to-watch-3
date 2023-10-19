@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, generatePath, useNavigate, useParams } from 'react-router-dom';
 import { SmallFilmCards } from '../../components/small-film-cards/small-film-cards';
 import { FilmData } from '../../mocks/films-data';
 import Screen404 from '../404-screen/404-screen';
@@ -14,10 +14,11 @@ export type FilmScreenProps = {
 }
 
 export default function FilmScreen({ userFilmsCount, filmsLikeThisCount, filmsData }: FilmScreenProps): JSX.Element {
+  const navigate = useNavigate();
+
   const params = useParams();
   const filmId = Number(params.id);
   const filmData = filmsData.find((film) => film.id === filmId);
-
   if (!filmData) {
     return <Screen404 />;
   }
@@ -47,20 +48,20 @@ export default function FilmScreen({ userFilmsCount, filmsLikeThisCount, filmsDa
               </p>
 
               <div className="film-card__buttons">
-                <Link to={ROUTES.filmPlayer.getDynamicPath(filmId)} className="btn btn--play film-card__button" type="button">
+                <button onClick={() => navigate(generatePath(ROUTES.filmPlayer.fullPath, {id: filmId}))} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </Link>
-                <Link to={ROUTES.myList.fullPath} className="btn btn--list film-card__button" type="button">
+                </button>
+                <button onClick={() => navigate(ROUTES.myList.fullPath)} className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">{ userFilmsCount }</span>
-                </Link>
-                <Link to={ROUTES.filmReview.relativePath} className="btn film-card__button">Add review</Link>
+                </button>
+                <button onClick={() => navigate(ROUTES.filmReview.relativePath)} className="btn film-card__button">Add review</button>
               </div>
             </div>
           </div>

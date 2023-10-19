@@ -8,17 +8,17 @@ export type SmallFilmCardsProps = {
 }
 
 export function SmallFilmCards({ cardsCount = 20, filmsData }: SmallFilmCardsProps): JSX.Element {
-  const [focusedCardId, setFocusedCardId] = useState(-1);
-  const onFocusHandler = (cardId: number) => setFocusedCardId(cardId);
+  const [hoveredCardId, setHoveredCardId] = useState<number | undefined>(undefined);
+  const onHoverHandler = (cardId: number | undefined) => setHoveredCardId(cardId);
 
   return (
     <div className="catalog__films-list">
       { filmsData.map((cardInfo: FilmData, index: number) => (index < cardsCount) && (
         <SmallFilmCard
           key={cardInfo.id}
-          focusedCardId={focusedCardId}
-          handleFocus={onFocusHandler}
-          handleBlur={() => onFocusHandler(-1)}
+          hoveredCardId={hoveredCardId}
+          handleMouseEnter={onHoverHandler}
+          handleMouseLeave={() => onHoverHandler(undefined)}
           {...cardInfo}
         />
       )) }

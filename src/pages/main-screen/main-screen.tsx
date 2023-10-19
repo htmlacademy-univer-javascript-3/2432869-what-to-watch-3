@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import Copyright from '../../components/copyright';
 import FilmGenreLinks from '../../components/film-genre-links/film-genre-links';
 import Logo from '../../components/logo';
@@ -16,8 +16,9 @@ export type MainScreenProps = {
 }
 
 export default function MainScreen({ promoFilmId, userFilmsCount, filmGenresData, filmsData }: MainScreenProps): JSX.Element {
-  const promoFilmData = filmsData.find((film) => film.id === promoFilmId);
+  const navigate = useNavigate();
 
+  const promoFilmData = filmsData.find((film) => film.id === promoFilmId);
   if (!promoFilmData) {
     throw new Error('Wrong promo film ID');
   }
@@ -51,19 +52,19 @@ export default function MainScreen({ promoFilmId, userFilmsCount, filmGenresData
               </p>
 
               <div className="film-card__buttons">
-                <Link to={ROUTES.filmPlayer.getDynamicPath(promoFilmId)} className="btn btn--play film-card__button" type="button">
+                <button onClick={() => navigate(generatePath(ROUTES.filmPlayer.fullPath, {id: promoFilmId}))} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </Link>
-                <Link to={ROUTES.myList.fullPath} className="btn btn--list film-card__button" type="button">
+                </button>
+                <button onClick={() => navigate(ROUTES.myList.fullPath)} className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">{ userFilmsCount }</span>
-                </Link>
+                </button>
               </div>
             </div>
           </div>

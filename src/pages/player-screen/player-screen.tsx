@@ -2,6 +2,7 @@ import './player-screen.css';
 import { useParams } from 'react-router-dom';
 import { FilmData } from '../../mocks/films-data';
 import Screen404 from '../404-screen/404-screen';
+import FormatFilmTime from '../../shared/format-film-time';
 
 export type PlayerScreenProps = {
   filmsData: FilmData[];
@@ -28,7 +29,7 @@ export default function PlayerScreen({ filmsData }: PlayerScreenProps): JSX.Elem
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler player__toggler-left">Toggler</div>
           </div>
-          <div className="player__time-value">{ filmData.duration } m.</div>
+          <div className="player__time-value">{ FormatFilmTime(filmData.duration) }</div>
         </div>
 
         <div className="player__controls-row">

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useImmer } from 'use-immer';
 import RatingInputs from './rating-inputs/rating-inputs';
 
@@ -15,15 +15,14 @@ export default function AddReviewForm({ ratingWidth }: AddReviewFormProps): JSX.
     });
   };
 
-  const handleCommentsChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleCommentsChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setReviewData((previousValue) => {
       previousValue.comments = e.target.value;
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    console.log(reviewData);
   };
 
   return (
