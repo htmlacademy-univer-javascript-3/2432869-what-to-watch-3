@@ -2,7 +2,7 @@ import { FilmGenresData } from '../../mocks/film-genres-data';
 import { GenreLink } from './film-genre-link';
 
 export type FilmGenreLinksProps = {
-  filmGenresData: FilmGenresData[];
+  filmGenresData: ReadonlyArray<FilmGenresData>;
 }
 
 export default function FilmGenreLinks({ filmGenresData }: FilmGenreLinksProps): JSX.Element {

@@ -5,7 +5,7 @@ import Screen404 from '../404-screen/404-screen';
 import FormatFilmTime from '../../shared/format-film-time';
 
 export type PlayerScreenProps = {
-  filmsData: FilmData[];
+  filmsData: ReadonlyArray<FilmData>;
 }
 
 export default function PlayerScreen({ filmsData }: PlayerScreenProps): JSX.Element {

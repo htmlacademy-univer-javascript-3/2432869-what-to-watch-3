@@ -1,14 +1,10 @@
-import Copyright from '../../components/copyright';
-import Logo from '../../components/logo';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
 
 export default function SignInScreen(): JSX.Element {
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <Logo />
-
-        <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+      <Header className='user-page__head' authScreen></Header>
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form">
@@ -28,11 +24,7 @@ export default function SignInScreen(): JSX.Element {
         </form>
       </div>
 
-      <footer className="page-footer">
-        <Logo light />
-
-        <Copyright />
-      </footer>
+      <Footer></Footer>
     </div>
   );
 }

@@ -3,7 +3,7 @@ export type FilmGenresData = {
   additionalClasses?: string;
 }
 
-export const filmGenresData: FilmGenresData[] = [
+export const filmGenresData: ReadonlyArray<FilmGenresData> = [
   {
     genre: 'All genres',
     additionalClasses: 'catalog__genres-item--active',
