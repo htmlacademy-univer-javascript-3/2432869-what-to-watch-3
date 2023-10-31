@@ -1,4 +1,4 @@
-import FormatFilmTime from '../../../shared/format-film-time';
+import formatFilmTime from '../../../shared/format-film-time';
 
 export type FilmDetailsProps = {
   director: string;
@@ -27,7 +27,7 @@ export default function FilmDetails({ director, starring, duration, genres, rele
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{ FormatFilmTime(duration) }</span>
+          <span className="film-card__details-value">{ formatFilmTime(duration) }</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

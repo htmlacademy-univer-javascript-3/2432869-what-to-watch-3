@@ -1,4 +1,4 @@
-export default function GetRatingDescription(rating: number): string {
+export default function getRatingDescription(rating: number): string {
   if (rating > 8) {
     return 'Very good';
   } else if (rating > 6) {

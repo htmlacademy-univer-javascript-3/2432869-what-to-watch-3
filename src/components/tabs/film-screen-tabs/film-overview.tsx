@@ -1,4 +1,4 @@
-import GetRatingDescription from '../../../shared/get-rating-description';
+import getRatingDescription from '../../../shared/get-rating-description';
 
 export type FilmOverviewProps = {
   rating: number;
@@ -15,7 +15,7 @@ export default function FilmOverview({ rating, ratingsCount, shortSummary, summa
       <div className="film-rating">
         <div className="film-rating__score">{ rating }</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">{ GetRatingDescription(rating) }</span>
+          <span className="film-rating__level">{ getRatingDescription(rating) }</span>
           <span className="film-rating__count">{ ratingsCount } ratings</span>
         </p>
       </div>

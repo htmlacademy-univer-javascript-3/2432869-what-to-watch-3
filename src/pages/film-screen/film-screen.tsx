@@ -3,22 +3,19 @@ import { SmallFilmCards } from '../../components/small-film-cards/small-film-car
 import { FilmData } from '../../mocks/films-data';
 import Screen404 from '../404-screen/404-screen';
 import { ROUTES } from '../../routes';
-import Tabs from '../../components/tabs/tabs/tabs';
+import FilmScreenTabs from '../../components/tabs/film-screen-tabs/tabs/film-screen-tabs';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import { TabData } from '../../components/tabs/tab-data-type';
 import { FilmReviewsProps } from '../../components/tabs/film-screen-tabs/film-reviews/film-reviews';
-import { FilmScreenTabsType } from '../../components/tabs/film-screen-tabs/film-screen-tabs-data';
 
 export type FilmScreenProps = FilmReviewsProps & {
   userFilmsCount: number;
   filmsLikeThisCount: number;
   filmsData: ReadonlyArray<FilmData>;
-  filmScreenTabsData: ReadonlyArray<TabData>;
 };
 
-export default function FilmScreen({ userFilmsCount, filmsLikeThisCount, filmsData,
-  filmScreenTabsData, filmReviewsData }: FilmScreenProps): JSX.Element {
+export default function FilmScreen({ userFilmsCount, filmsLikeThisCount,
+  filmsData, filmReviewsData }: FilmScreenProps): JSX.Element {
   const navigate = useNavigate();
 
   const params = useParams();
@@ -75,7 +72,7 @@ export default function FilmScreen({ userFilmsCount, filmsLikeThisCount, filmsDa
             </div>
 
             <div className="film-card__desc">
-              <Tabs<FilmScreenTabsType> tabsData={filmScreenTabsData} tabsContentProps={{...filmData, filmReviewsData}} />
+              <FilmScreenTabs filmData={filmData} filmReviewsData={filmReviewsData} />
             </div>
           </div>
         </div>
