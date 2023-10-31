@@ -7,7 +7,7 @@ export type SmallFilmCardData = {
   trailerSource: string;
 }
 
-export const smallFilmCardsData: SmallFilmCardData[] = [
+export const smallFilmCardsData: ReadonlyArray<SmallFilmCardData> = [
   {
     id: 0,
     filmImageSource: 'fantastic-beasts-the-crimes-of-grindelwald.jpg',

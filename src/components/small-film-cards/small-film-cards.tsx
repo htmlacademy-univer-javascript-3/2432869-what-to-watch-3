@@ -4,16 +4,24 @@ import { FilmData } from '../../mocks/films-data';
 
 export type SmallFilmCardsProps = {
   cardsCount?: number;
-  filmsData: FilmData[];
+  genre?: string;
+  filmsData: ReadonlyArray<FilmData>;
 }
 
-export function SmallFilmCards({ cardsCount = 20, filmsData }: SmallFilmCardsProps): JSX.Element {
+export function SmallFilmCards({ cardsCount = 20, genre = 'All genres', filmsData }: SmallFilmCardsProps): JSX.Element {
+  let genreFilmsData: FilmData[];
+  if (genre === 'All genres') {
+    genreFilmsData = [...filmsData];
+  } else {
+    genreFilmsData = filmsData.filter((film) => film.genres.includes(genre));
+  }
+
   const [hoveredCardId, setHoveredCardId] = useState<number | undefined>(undefined);
   const onHoverHandler = (cardId: number | undefined) => setHoveredCardId(cardId);
 
   return (
     <div className="catalog__films-list">
-      { filmsData.map((cardInfo: FilmData, index: number) => (index < cardsCount) && (
+      { genreFilmsData.map((cardInfo: FilmData, index: number) => (index < cardsCount) && (
         <SmallFilmCard
           key={cardInfo.id}
           hoveredCardId={hoveredCardId}

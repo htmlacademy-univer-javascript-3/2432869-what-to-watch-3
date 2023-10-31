@@ -1,19 +1,21 @@
-import { Link, generatePath, useNavigate, useParams } from 'react-router-dom';
+import { generatePath, useNavigate, useParams } from 'react-router-dom';
 import { SmallFilmCards } from '../../components/small-film-cards/small-film-cards';
 import { FilmData } from '../../mocks/films-data';
 import Screen404 from '../404-screen/404-screen';
-import Logo from '../../components/logo';
-import UserBlock from '../../components/user-block';
 import { ROUTES } from '../../routes';
-import Copyright from '../../components/copyright';
+import FilmScreenTabs from '../../components/tabs/film-screen-tabs/tabs/film-screen-tabs';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
+import { FilmReviewsProps } from '../../components/tabs/film-screen-tabs/film-reviews/film-reviews';
 
-export type FilmScreenProps = {
+export type FilmScreenProps = FilmReviewsProps & {
   userFilmsCount: number;
   filmsLikeThisCount: number;
-  filmsData: FilmData[];
-}
+  filmsData: ReadonlyArray<FilmData>;
+};
 
-export default function FilmScreen({ userFilmsCount, filmsLikeThisCount, filmsData }: FilmScreenProps): JSX.Element {
+export default function FilmScreen({ userFilmsCount, filmsLikeThisCount,
+  filmsData, filmReviewsData }: FilmScreenProps): JSX.Element {
   const navigate = useNavigate();
 
   const params = useParams();
@@ -33,11 +35,7 @@ export default function FilmScreen({ userFilmsCount, filmsLikeThisCount, filmsDa
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <header className="page-header film-card__head">
-            <Logo />
-
-            <UserBlock />
-          </header>
+          <Header className='film-card__head'></Header>
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
@@ -74,37 +72,7 @@ export default function FilmScreen({ userFilmsCount, filmsLikeThisCount, filmsDa
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <Link to={''} className="film-nav__link">Overview</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to={''} className="film-nav__link">Details</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to={''} className="film-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{ filmData.rating }</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{ filmData.shortSummary }</p>
-
-                <p>{ filmData.summary }</p>
-
-                <p className="film-card__director"><strong>Director: { filmData.director }</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: { filmData.starring } and other</strong></p>
-              </div>
+              <FilmScreenTabs filmData={filmData} filmReviewsData={filmReviewsData} />
             </div>
           </div>
         </div>
@@ -114,14 +82,12 @@ export default function FilmScreen({ userFilmsCount, filmsLikeThisCount, filmsDa
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <SmallFilmCards cardsCount={filmsLikeThisCount} filmsData={filmsData} />
+          <SmallFilmCards cardsCount={filmsLikeThisCount} filmsData={filmsData}
+            genre={filmData.genres.substring(0, filmData.genres.indexOf(', '))}
+          />
         </section>
 
-        <footer className="page-footer">
-          <Logo light />
-
-          <Copyright />
-        </footer>
+        <Footer></Footer>
       </div>
     </>
   );

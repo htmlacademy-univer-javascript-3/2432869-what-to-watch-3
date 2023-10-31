@@ -17,21 +17,20 @@ export type SmallFilmCardProps = {
 export function SmallFilmCard({ id, imageSource, name, trailerSource, hoveredCardId,
   handleMouseEnter, handleMouseLeave }: SmallFilmCardProps): JSX.Element {
   const [playTrailer, setPlayTrailer] = useState(false);
+
   useEffect(() => {
-    let ignore = false;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     if (id === hoveredCardId) {
-      setTimeout(() => {
-        if (!ignore) {
-          setPlayTrailer(true);
-        }
+      timeoutId = setTimeout(() => {
+        setPlayTrailer(true);
       }, 1000);
     } else {
       setPlayTrailer(false);
     }
 
     return () => {
-      ignore = true;
+      clearTimeout(timeoutId);
     };
   }, [id, hoveredCardId]);
 
@@ -39,7 +38,7 @@ export function SmallFilmCard({ id, imageSource, name, trailerSource, hoveredCar
     <article className="small-film-card catalog__films-card" onMouseEnter={() => handleMouseEnter(id)} onMouseLeave={handleMouseLeave}>
       <div className="small-film-card__image">
         { playTrailer
-          ? <VideoPlayer source={trailerSource} play={playTrailer} autoPlay muted width="280" height="175" />
+          ? <VideoPlayer source={trailerSource} play={playTrailer} autoPlay muted preload='auto' width="280" height="175" />
           : <img src={imageSource} alt={name} width="280" height="175" /> }
       </div>
       <h3 className="small-film-card__title">

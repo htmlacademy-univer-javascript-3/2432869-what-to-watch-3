@@ -3,11 +3,10 @@ import AddReviewForm, { AddReviewFormProps } from '../../components/add-review-f
 import { FilmData } from '../../mocks/films-data';
 import Screen404 from '../404-screen/404-screen';
 import { ROUTES } from '../../routes';
-import Logo from '../../components/logo';
-import UserBlock from '../../components/user-block';
+import Header from '../../components/header';
 
 export type AddReviewScreenProps = AddReviewFormProps & {
-  filmsData: FilmData[];
+  filmsData: ReadonlyArray<FilmData>;
 };
 
 export default function AddReviewScreen({ ratingWidth, filmsData }: AddReviewScreenProps): JSX.Element {
@@ -28,9 +27,7 @@ export default function AddReviewScreen({ ratingWidth, filmsData }: AddReviewScr
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
-          <Logo />
-
+        <Header>
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
@@ -41,9 +38,7 @@ export default function AddReviewScreen({ ratingWidth, filmsData }: AddReviewScr
               </li>
             </ul>
           </nav>
-
-          <UserBlock />
-        </header>
+        </Header>
 
         <div className="film-card__poster film-card__poster--small">
           <img src={filmData.imageSource} alt={filmData.name} width="218" height="327" />

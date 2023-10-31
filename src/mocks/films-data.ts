@@ -10,11 +10,12 @@ export type FilmData = {
   backgroundImageSource: string;
   trailerSource: string;
   rating: number;
+  ratingsCount: number;
   director: string;
   starring: string;
 }
 
-export const filmsData: FilmData[] = [
+export const filmsData: ReadonlyArray<FilmData> = [
   {
     id: 0,
     name: 'The Greatest Showman',
@@ -27,6 +28,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 7.8,
+    ratingsCount: 763,
     director: 'Michael Gracey',
     starring: 'Hugh Jackman, Michelle Williams'
   },
@@ -42,6 +44,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 7.4,
+    ratingsCount: 487,
     director: 'Rian Johnson',
     starring: 'Daisy Ridley, John Boyega, Mark Hamill'
   },
@@ -57,6 +60,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 6,
+    ratingsCount: 124,
     director: 'Trish Sie',
     starring: 'Anna Kendrick, Rebel Wilson'
   },
@@ -72,6 +76,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 7.6,
+    ratingsCount: 748,
     director: 'Craig Gillespie',
     starring: 'Allison Janney, Margot Robbie, Sebastian Stan'
   },
@@ -80,13 +85,14 @@ export const filmsData: FilmData[] = [
     name: 'Call Me by Your Name',
     releaseDate: 2017,
     genres: 'Drama, Romance',
-    summary: 'CALL ME BY YOUR NAME, the new film by Luca Guadagnino, is a sensual and transcendent tale of first love, based on the acclaimed novel by Andr√© Aciman. It\'s the summer of 1983 in the north of Italy, and Elio Perlman (Timoth√©e Chalamet), a precocious 17-year-old young man, spends his days in his family\'s 17th century villa transcribing and playing classical music, reading, and flirting with his friend Marzia (Esther Garrel). Elio enjoys a close relationship with his father (Michael Stuhlbarg), an eminent professor specializing in Greco-Roman culture, and his mother Annella (Amira Casar), a translator, who favor him with the fruits of high culture in a setting that overflows with natural delights. While Elio\'s sophistication and intellectual gifts suggest he is already a fully-fledged adult, there is much that yet remains innocent and unformed about him, particularly about matters of the heart. One day, Oliver (Armie Hammer), a 24-year-old American college graduate student working on his...',
+    summary: 'CALL ME BY YOUR NAME, the new film by Luca Guadagnino, is a sensual and transcendent tale of first love, based on the acclaimed novel by Andrew Aciman. It\'s the summer of 1983 in the north of Italy, and Elio Perlman (Timothewe Chalamet), a precocious 17-year-old young man, spends his days in his family\'s 17th century villa transcribing and playing classical music, reading, and flirting with his friend Marzia (Esther Garrel). Elio enjoys a close relationship with his father (Michael Stuhlbarg), an eminent professor specializing in Greco-Roman culture, and his mother Annella (Amira Casar), a translator, who favor him with the fruits of high culture in a setting that overflows with natural delights. While Elio\'s sophistication and intellectual gifts suggest he is already a fully-fledged adult, there is much that yet remains innocent and unformed about him, particularly about matters of the heart. One day, Oliver (Armie Hammer), a 24-year-old American college graduate student working on his...',
     shortSummary: 'In 1980s Italy, a romance blossoms between a seventeen year-old student and the older man hired as his father\'s research assistant.',
     duration: 132,
     imageSource: 'https://m.media-amazon.com/images/M/MV5BNDk3NTEwNjc0MV5BMl5BanBnXkFtZTgwNzYxNTMwMzI@._V1_SX300.jpg',
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 8,
+    ratingsCount: 2128,
     director: 'Luca Guadagnino',
     starring: 'Armie Hammer, Michael Stuhlbarg, Timoth√©e Chalamet'
   },
@@ -102,6 +108,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 6.8,
+    ratingsCount: 524,
     director: 'Matthew Vaughn',
     starring: 'Colin Firth, Taron Egerton'
   },
@@ -117,6 +124,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 7.5,
+    ratingsCount: 417,
     director: 'Jon Watts',
     starring: 'Michael Keaton, Tom Holland'
   },
@@ -132,6 +140,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 8.8,
+    ratingsCount: 1573,
     director: 'Damien Chazelle',
     starring: 'Emma Stone, Rosemarie DeWitt, Ryan Gosling'
   },
@@ -147,6 +156,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 7.8,
+    ratingsCount: 648,
     director: 'Gareth Edwards',
     starring: 'Diego Luna, Felicity Jones'
   },
@@ -162,6 +172,7 @@ export const filmsData: FilmData[] = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 6.7,
+    ratingsCount: 176,
     director: 'Tim Burton',
     starring: 'Asa Butterfield, Eva Green, Samuel L. Jackson'
   }
