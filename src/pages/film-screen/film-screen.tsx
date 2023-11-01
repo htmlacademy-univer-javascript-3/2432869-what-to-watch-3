@@ -7,6 +7,7 @@ import FilmScreenTabs from '../../components/tabs/film-screen-tabs/tabs/film-scr
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import { FilmReviewsProps } from '../../components/tabs/film-screen-tabs/film-reviews/film-reviews';
+import { Genre } from '../../mocks/genres';
 
 export type FilmScreenProps = FilmReviewsProps & {
   userFilmsCount: number;
@@ -30,7 +31,7 @@ export default function FilmScreen({ userFilmsCount, filmsLikeThisCount,
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={filmData.backgroundImageSource} alt={filmData.name} />
+            <img src={filmData.bgImageSource} alt={filmData.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -82,8 +83,10 @@ export default function FilmScreen({ userFilmsCount, filmsLikeThisCount,
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <SmallFilmCards cardsCount={filmsLikeThisCount} filmsData={filmsData}
-            genre={filmData.genres.substring(0, filmData.genres.indexOf(', '))}
+          <SmallFilmCards
+            genre={filmData.genres.substring(0, filmData.genres.indexOf(', ')) as Genre}
+            cardsCount={filmsLikeThisCount}
+            excludeFilmId={filmData.id}
           />
         </section>
 

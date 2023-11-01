@@ -1,35 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SmallFilmCard } from './small-film-card';
 import { FilmData } from '../../mocks/films-data';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeFilmsByGenre, resetMaxCardsCount, setGenre } from '../../store/action';
+import { Genre } from '../../mocks/genres';
 
 export type SmallFilmCardsProps = {
+  genre?: Genre;
   cardsCount?: number;
-  genre?: string;
-  filmsData: ReadonlyArray<FilmData>;
+  excludeFilmId?: number;
 }
 
-export function SmallFilmCards({ cardsCount = 20, genre = 'All genres', filmsData }: SmallFilmCardsProps): JSX.Element {
-  let genreFilmsData: FilmData[];
-  if (genre === 'All genres') {
-    genreFilmsData = [...filmsData];
-  } else {
-    genreFilmsData = filmsData.filter((film) => film.genres.includes(genre));
-  }
+export function SmallFilmCards({ genre = 'All genres', cardsCount = 20, excludeFilmId = -1 }: SmallFilmCardsProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const genreFilmsData = useAppSelector((state) => state.filmsData);
+
+  useEffect(() => {
+    dispatch(resetMaxCardsCount());
+    dispatch(setGenre({ genre: genre }));
+    dispatch(changeFilmsByGenre());
+  }, [dispatch, genre]);
 
   const [hoveredCardId, setHoveredCardId] = useState<number | undefined>(undefined);
   const onHoverHandler = (cardId: number | undefined) => setHoveredCardId(cardId);
 
   return (
     <div className="catalog__films-list">
-      { genreFilmsData.map((cardInfo: FilmData, index: number) => (index < cardsCount) && (
-        <SmallFilmCard
-          key={cardInfo.id}
-          hoveredCardId={hoveredCardId}
-          handleMouseEnter={onHoverHandler}
-          handleMouseLeave={() => onHoverHandler(undefined)}
-          {...cardInfo}
-        />
-      )) }
+      { genreFilmsData.map((filmData: FilmData, index: number) =>
+        (index < cardsCount && filmData.id !== excludeFilmId) && (
+          <SmallFilmCard
+            key={filmData.id}
+            hoveredCardId={hoveredCardId}
+            handleMouseEnter={onHoverHandler}
+            handleMouseLeave={() => onHoverHandler(undefined)}
+            {...filmData}
+          />
+        )) }
     </div>
   );
 }

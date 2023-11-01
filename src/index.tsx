@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app';
-import { PromoFilmData } from './mocks/promo-film-data';
+import { promoFilmData } from './mocks/promo-film-data';
 import { PlayerData } from './mocks/player-data';
-import { filmGenresData } from './mocks/film-genres-data';
 import { filmsData } from './mocks/films-data';
 import { FilmReviewsData } from './mocks/film-reviews-data';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import { genres } from './mocks/genres';
 
 
 const root = ReactDOM.createRoot(
@@ -14,15 +16,17 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      {...PromoFilmData}
-      {...PlayerData}
-      ratingWidth={10}
-      userFilmsCount={9}
-      filmsLikeThisCount={4}
-      filmGenresData={filmGenresData}
-      filmsData={filmsData}
-      filmReviewsData={FilmReviewsData}
-    />
+    <Provider store={store}>
+      <App
+        {...PlayerData}
+        ratingWidth={10}
+        userFilmsCount={6}
+        filmsLikeThisCount={4}
+        promoFilmData={promoFilmData}
+        filmsData={filmsData}
+        filmReviewsData={FilmReviewsData}
+        genres={genres}
+      />
+    </Provider>
   </React.StrictMode>
 );

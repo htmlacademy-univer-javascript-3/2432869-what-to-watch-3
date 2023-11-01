@@ -1,4 +1,5 @@
-export default function formatFilmTime(minutes: number): string {
-  const hour = Math.floor(minutes / 60);
-  return `${hour}:${minutes - 60 * hour}`;
+export default function formatFilmTime(totalMinutes: number): string {
+  const hour = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes - 60 * hour;
+  return `${hour}:${minutes > 9 ? minutes : `0${minutes}`}`;
 }
