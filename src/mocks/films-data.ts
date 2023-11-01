@@ -172,7 +172,7 @@ export const filmsData: ReadonlyArray<FilmData> = [
     backgroundImageSource: 'img/bg-the-grand-budapest-hotel.jpg',
     trailerSource: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     rating: 6.7,
-    ratingsCount: 176,
+    ratingsCount: 174,
     director: 'Tim Burton',
     starring: 'Asa Butterfield, Eva Green, Samuel L. Jackson'
   }
