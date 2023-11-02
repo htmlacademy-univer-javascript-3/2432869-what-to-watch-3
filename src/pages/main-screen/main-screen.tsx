@@ -1,32 +1,30 @@
 import { generatePath, useNavigate } from 'react-router-dom';
-import FilmGenreLinks from '../../components/film-genre-links/film-genre-links';
+import GenresFilter, { GenresFilterProps } from '../../components/genres-filter/genres-filter';
 import { SmallFilmCards } from '../../components/small-film-cards/small-film-cards';
-import { FilmGenresData } from '../../mocks/film-genres-data';
-import { FilmData } from '../../mocks/films-data';
 import { ROUTES } from '../../routes';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { PromoFilmData } from '../../mocks/promo-film-data';
+import { increaseMaxCardsCount } from '../../store/action';
 
-export type MainScreenProps = {
-  promoFilmId: number;
+export type MainScreenProps = GenresFilterProps & {
+  promoFilmData: PromoFilmData;
   userFilmsCount: number;
-  filmGenresData: ReadonlyArray<FilmGenresData>;
-  filmsData: ReadonlyArray<FilmData>;
 }
 
-export default function MainScreen({ promoFilmId, userFilmsCount, filmGenresData, filmsData }: MainScreenProps): JSX.Element {
+export default function MainScreen({ promoFilmData, userFilmsCount, genres }: MainScreenProps): JSX.Element {
   const navigate = useNavigate();
 
-  const promoFilmData = filmsData.find((film) => film.id === promoFilmId);
-  if (!promoFilmData) {
-    throw new Error('Wrong promo film ID');
-  }
+  const { length: genreFilmsCount } = useAppSelector((state) => state.filmsData);
+  const maxCardsCount = useAppSelector((state) => state.maxCardsCount);
+  const dispatch = useAppDispatch();
 
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promoFilmData.backgroundImageSource} alt={promoFilmData.name} />
+          <img src={promoFilmData.bgImageSource} alt={promoFilmData.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -47,7 +45,7 @@ export default function MainScreen({ promoFilmId, userFilmsCount, filmGenresData
               </p>
 
               <div className="film-card__buttons">
-                <button onClick={() => navigate(generatePath(ROUTES.filmPlayer.fullPath, {id: promoFilmId}))} className="btn btn--play film-card__button" type="button">
+                <button onClick={() => navigate(generatePath(ROUTES.filmPlayer.fullPath, {id: promoFilmData.id}))} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -70,13 +68,20 @@ export default function MainScreen({ promoFilmId, userFilmsCount, filmGenresData
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <FilmGenreLinks filmGenresData={filmGenresData}/>
+          <GenresFilter genres={genres}/>
 
-          <SmallFilmCards filmsData={filmsData}></SmallFilmCards>
+          <SmallFilmCards cardsCount={maxCardsCount} />
 
+          {maxCardsCount < genreFilmsCount &&
           <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+            <button
+              onClick={() => (dispatch(increaseMaxCardsCount()))}
+              className="catalog__button"
+              type="button"
+            >Show more
+            </button>
+          </div>}
+
         </section>
 
         <Footer></Footer>

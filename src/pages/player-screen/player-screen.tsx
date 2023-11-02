@@ -6,7 +6,7 @@ import formatFilmTime from '../../shared/format-film-time';
 
 export type PlayerScreenProps = {
   filmsData: ReadonlyArray<FilmData>;
-}
+};
 
 export default function PlayerScreen({ filmsData }: PlayerScreenProps): JSX.Element {
   const urlParams = useParams();
@@ -19,7 +19,7 @@ export default function PlayerScreen({ filmsData }: PlayerScreenProps): JSX.Elem
 
   return (
     <div className="player">
-      <video src={filmData.trailerSource} className="player__video" poster={filmData.backgroundImageSource}></video>
+      <video src={filmData.trailerSource} className="player__video" poster={filmData.bgImageSource}></video>
 
       <button type="button" className="player__exit">Exit</button>
 

@@ -22,7 +22,7 @@ export default function AddReviewScreen({ ratingWidth, filmsData }: AddReviewScr
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={filmData.backgroundImageSource} alt={filmData.name} />
+          <img src={filmData.bgImageSource} alt={filmData.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
