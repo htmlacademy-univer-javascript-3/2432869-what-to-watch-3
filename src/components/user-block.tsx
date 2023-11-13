@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { ROUTES } from '../routes';
+import SignOutButton from './sign-out-button/sign-out-button';
 
 export default function UserBlock(): JSX.Element {
   return (
@@ -10,7 +9,7 @@ export default function UserBlock(): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <Link to={ROUTES.login.fullPath} className="user-block__link">Sign out</Link>
+        <SignOutButton classNames={'user-block__link'} />
       </li>
     </ul>
   );

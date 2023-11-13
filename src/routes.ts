@@ -21,4 +21,4 @@ export const ROUTES = {
   notFound: {
     fullPath: '*'
   },
-};
+} as const;

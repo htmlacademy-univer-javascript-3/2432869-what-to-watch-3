@@ -1,0 +1,44 @@
+import { generatePath, useNavigate } from 'react-router-dom';
+import { ROUTES } from '../routes';
+import { PromoFilmData } from '../types/promo-film-data';
+import { useAuthStatusSelector, useFavoritesCountSelector } from '../hooks/selectors';
+import { AuthStatus } from '../consts';
+
+export type FilmCardDescProps = PromoFilmData;
+
+export default function FilmCardDesc({ id, name, genre, released }: FilmCardDescProps) {
+  const navigate = useNavigate();
+
+  const authStatus = useAuthStatusSelector();
+  const favoriteFilmsCount = useFavoritesCountSelector();
+
+  return (
+    <div className="film-card__desc">
+      <h2 className="film-card__title">{ name }</h2>
+      <p className="film-card__meta">
+        <span className="film-card__genre">{ genre }</span>
+        <span className="film-card__year">{ released }</span>
+      </p>
+
+      <div className="film-card__buttons">
+        <button onClick={() => navigate(generatePath(ROUTES.filmPlayer.fullPath, { id }))} className="btn btn--play film-card__button" type="button">
+          <svg viewBox="0 0 19 19" width="19" height="19">
+            <use xlinkHref="#play-s"></use>
+          </svg>
+          <span>Play</span>
+        </button>
+        {authStatus === AuthStatus.Auth &&
+          <>
+            <button onClick={() => navigate(ROUTES.myList.fullPath)} className="btn btn--list film-card__button" type="button">
+              <svg viewBox="0 0 19 20" width="19" height="20">
+                <use xlinkHref="#add"></use>
+              </svg>
+              <span>My list</span>
+              <span className="film-card__count">{ favoriteFilmsCount }</span>
+            </button>
+            <button onClick={() => navigate(ROUTES.filmReview.relativePath)} className="btn film-card__button">Add review</button>
+          </>}
+      </div>
+    </div>
+  );
+}

@@ -1,33 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SmallFilmCard } from './small-film-card';
-import { FilmData } from '../../mocks/films-data';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeFilmsByGenre, resetMaxCardsCount, setGenre } from '../../store/action';
-import { Genre } from '../../mocks/genres';
+import { ShortFilmData } from '../../types/short-film-data';
 
 export type SmallFilmCardsProps = {
-  genre?: Genre;
-  cardsCount?: number;
-  excludeFilmId?: number;
-}
+  filmsData: ShortFilmData[];
+  maxCardsCount?: number;
+  resetMaxCardsCount?: () => void;
+};
 
-export function SmallFilmCards({ genre = 'All genres', cardsCount = 20, excludeFilmId = -1 }: SmallFilmCardsProps): JSX.Element {
-  const dispatch = useAppDispatch();
-  const genreFilmsData = useAppSelector((state) => state.filmsData);
-
-  useEffect(() => {
-    dispatch(resetMaxCardsCount());
-    dispatch(setGenre({ genre: genre }));
-    dispatch(changeFilmsByGenre());
-  }, [dispatch, genre]);
-
-  const [hoveredCardId, setHoveredCardId] = useState<number | undefined>(undefined);
-  const onHoverHandler = (cardId: number | undefined) => setHoveredCardId(cardId);
+export function SmallFilmCards({ filmsData, maxCardsCount = 8 }: SmallFilmCardsProps): JSX.Element {
+  const [hoveredCardId, setHoveredCardId] = useState<string | undefined>(undefined);
+  const onHoverHandler = (cardId: string | undefined) => setHoveredCardId(cardId);
 
   return (
     <div className="catalog__films-list">
-      { genreFilmsData.map((filmData: FilmData, index: number) =>
-        (index < cardsCount && filmData.id !== excludeFilmId) && (
+      { filmsData.map((filmData: ShortFilmData, index: number) =>
+        index < maxCardsCount && (
           <SmallFilmCard
             key={filmData.id}
             hoveredCardId={hoveredCardId}

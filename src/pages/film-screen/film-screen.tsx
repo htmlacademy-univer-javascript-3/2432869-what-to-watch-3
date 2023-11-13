@@ -1,80 +1,67 @@
-import { generatePath, useNavigate, useParams } from 'react-router-dom';
 import { SmallFilmCards } from '../../components/small-film-cards/small-film-cards';
-import { FilmData } from '../../mocks/films-data';
-import Screen404 from '../404-screen/404-screen';
-import { ROUTES } from '../../routes';
 import FilmScreenTabs from '../../components/tabs/film-screen-tabs/tabs/film-screen-tabs';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import { FilmReviewsProps } from '../../components/tabs/film-screen-tabs/film-reviews/film-reviews';
-import { Genre } from '../../mocks/genres';
+import { useEffect } from 'react';
+import FilmCardDesc from '../../components/film-card-desc';
+import FilmCardPoster from '../../components/film-card-poster';
+import Spinner from '../../components/spinner/spinner';
+import useFilmByParamId from '../../hooks/use-film-by-param-id';
+import { useAppDispatch } from '../../hooks';
+import { fetchReviewsDataAction, fetchSimilarFilmsDataAction } from '../../store/api-actions';
+import { useReviewsSelector, useSimilarFilmsSelector } from '../../hooks/selectors';
+import { loadFilm } from '../../store/action';
 
-export type FilmScreenProps = FilmReviewsProps & {
-  userFilmsCount: number;
-  filmsLikeThisCount: number;
-  filmsData: ReadonlyArray<FilmData>;
-};
 
-export default function FilmScreen({ userFilmsCount, filmsLikeThisCount,
-  filmsData, filmReviewsData }: FilmScreenProps): JSX.Element {
-  const navigate = useNavigate();
+export default function FilmScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-  const params = useParams();
-  const filmId = Number(params.id);
-  const filmData = filmsData.find((film) => film.id === filmId);
-  if (!filmData) {
-    return <Screen404 />;
-  }
+  const filmData = useFilmByParamId();
+  const similarFilmsData = useSimilarFilmsSelector();
+  const reviewsData = useReviewsSelector();
+
+  useEffect(() => {
+    if (filmData) {
+      dispatch(fetchSimilarFilmsDataAction(filmData.id));
+      dispatch(fetchReviewsDataAction(filmData.id));
+    }
+  }, [filmData]);
+
+  useEffect(() => () => {
+    dispatch(loadFilm(undefined));
+  }, []);
 
   return (
     <>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={{backgroundColor: filmData?.backgroundColor}}>
         <div className="film-card__hero">
-          <div className="film-card__bg">
-            <img src={filmData.bgImageSource} alt={filmData.name} />
-          </div>
+          {filmData &&
+            <div className="film-card__bg">
+              <img src={filmData.backgroundImage} alt={filmData.name} />
+            </div>}
 
           <h1 className="visually-hidden">WTW</h1>
 
           <Header className='film-card__head'></Header>
 
           <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{ filmData.name }</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{ filmData.genres }</span>
-                <span className="film-card__year">{ filmData.releaseDate }</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <button onClick={() => navigate(generatePath(ROUTES.filmPlayer.fullPath, {id: filmId}))} className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button onClick={() => navigate(ROUTES.myList.fullPath)} className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">{ userFilmsCount }</span>
-                </button>
-                <button onClick={() => navigate(ROUTES.filmReview.relativePath)} className="btn film-card__button">Add review</button>
-              </div>
-            </div>
+            {filmData
+              ? <FilmCardDesc {...filmData} />
+              : <Spinner />}
           </div>
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
-            <div className="film-card__poster film-card__poster--big">
-              <img src={filmData.imageSource} alt={filmData.name} width="218" height="327" />
-            </div>
-
-            <div className="film-card__desc">
-              <FilmScreenTabs filmData={filmData} filmReviewsData={filmReviewsData} />
-            </div>
+            {filmData
+              ?
+              <>
+                <FilmCardPoster posterImage={filmData.posterImage} name={filmData.name} big />
+                <div className="film-card__desc">
+                  <FilmScreenTabs filmData={filmData} reviewsData={reviewsData} />
+                </div>
+              </>
+              : <Spinner />}
           </div>
         </div>
       </section>
@@ -83,11 +70,9 @@ export default function FilmScreen({ userFilmsCount, filmsLikeThisCount,
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <SmallFilmCards
-            genre={filmData.genres.substring(0, filmData.genres.indexOf(', ')) as Genre}
-            cardsCount={filmsLikeThisCount}
-            excludeFilmId={filmData.id}
-          />
+          {filmData
+            ? <SmallFilmCards filmsData={similarFilmsData} />
+            : <Spinner />}
         </section>
 
         <Footer></Footer>

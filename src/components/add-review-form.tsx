@@ -1,12 +1,16 @@
 import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useImmer } from 'use-immer';
 import RatingInputs from './rating-inputs/rating-inputs';
+import { useAppDispatch } from '../hooks';
+import { postReviewAction } from '../store/api-actions';
 
 export type AddReviewFormProps = {
+  filmId: string;
   ratingWidth: number;
 };
 
-export default function AddReviewForm({ ratingWidth }: AddReviewFormProps): JSX.Element {
+export default function AddReviewForm({ filmId, ratingWidth }: AddReviewFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const [reviewData, setReviewData] = useImmer({ rating: 8, comments: '' });
 
   const handleRatingChange = (newRating: number) => {
@@ -23,6 +27,11 @@ export default function AddReviewForm({ ratingWidth }: AddReviewFormProps): JSX.
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    dispatch(postReviewAction({
+      filmId: filmId,
+      comment: reviewData.comments,
+      rating: reviewData.rating,
+    }));
   };
 
   return (

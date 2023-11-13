@@ -1,21 +1,21 @@
-import { FilmReviewData } from '../../../../mocks/film-reviews-data';
 import FilmReview from './film-review';
+import { ReviewData } from '../../../../types/review-data';
 
 export type FilmReviewsProps = {
-  filmReviewsData: ReadonlyArray<FilmReviewData>;
-};
+  reviewsData: ReviewData[];
+}
 
-export default function FilmReviews({ filmReviewsData }: FilmReviewsProps): JSX.Element {
+export default function FilmReviews({ reviewsData }: FilmReviewsProps): JSX.Element {
   const reviewsColumns: JSX.Element[] = [];
   let reviews: JSX.Element[] = [];
-  for (let i = 0; i < filmReviewsData.length; i++) {
+  for (let i = 0; i < reviewsData.length; i++) {
     reviews.push((
-      <FilmReview key={filmReviewsData[i].id} {...filmReviewsData[i]} />
+      <FilmReview key={reviewsData[i].id} {...reviewsData[i]} />
     ));
 
-    if (i % 3 === 2 || i + 1 === filmReviewsData.length) {
+    if (i % 3 === 2 || i + 1 === reviewsData.length) {
       reviewsColumns.push((
-        <div key={-filmReviewsData[i].id} className="film-card__reviews-col">
+        <div key={-reviewsData[i].id} className="film-card__reviews-col">
           { ...reviews }
         </div>
       ));

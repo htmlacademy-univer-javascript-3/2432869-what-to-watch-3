@@ -1,31 +1,37 @@
-import { generatePath, useNavigate } from 'react-router-dom';
 import GenresFilter, { GenresFilterProps } from '../../components/genres-filter/genres-filter';
 import { SmallFilmCards } from '../../components/small-film-cards/small-film-cards';
-import { ROUTES } from '../../routes';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { PromoFilmData } from '../../mocks/promo-film-data';
-import { increaseMaxCardsCount } from '../../store/action';
+import { useFilmsByGenreSelector, useGenreSelector, usePromoFilmSelector } from '../../hooks/selectors';
+import { MAX_CARDS_COUNT_STEP } from '../../consts';
+import { useEffect, useState } from 'react';
+import ShowMoreButton from '../../components/show-more-button';
+import Spinner from '../../components/spinner/spinner';
+import FilmCardDesc from '../../components/film-card-desc';
+import FilmCardPoster from '../../components/film-card-poster';
 
-export type MainScreenProps = GenresFilterProps & {
-  promoFilmData: PromoFilmData;
-  userFilmsCount: number;
-}
+export type MainScreenProps = GenresFilterProps;
 
-export default function MainScreen({ promoFilmData, userFilmsCount, genres }: MainScreenProps): JSX.Element {
-  const navigate = useNavigate();
+export default function MainScreen({ genres }: MainScreenProps): JSX.Element {
+  const [maxCardsCount, setMaxCardsCount] = useState(MAX_CARDS_COUNT_STEP);
+  const resetMaxCardsCount = () => setMaxCardsCount(MAX_CARDS_COUNT_STEP);
+  const increaseMaxCardsCount = () => setMaxCardsCount((prev) => prev + MAX_CARDS_COUNT_STEP);
 
-  const { length: genreFilmsCount } = useAppSelector((state) => state.filmsData);
-  const maxCardsCount = useAppSelector((state) => state.maxCardsCount);
-  const dispatch = useAppDispatch();
+  const promoFilmData = usePromoFilmSelector();
+
+  const genre = useGenreSelector();
+  const genreFilmsData = useFilmsByGenreSelector(genre);
+  useEffect(() => {
+    resetMaxCardsCount();
+  }, [genre]);
 
   return (
     <>
       <section className="film-card">
-        <div className="film-card__bg">
-          <img src={promoFilmData.bgImageSource} alt={promoFilmData.name} />
-        </div>
+        {promoFilmData &&
+          <div className="film-card__bg">
+            <img src={promoFilmData.backgroundImage} alt={promoFilmData.name} />
+          </div>}
 
         <h1 className="visually-hidden">WTW</h1>
 
@@ -33,33 +39,13 @@ export default function MainScreen({ promoFilmData, userFilmsCount, genres }: Ma
 
         <div className="film-card__wrap">
           <div className="film-card__info">
-            <div className="film-card__poster">
-              <img src={promoFilmData.imageSource} alt={promoFilmData.name} width="218" height="327" />
-            </div>
-
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{ promoFilmData.name }</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{ promoFilmData.genres }</span>
-                <span className="film-card__year">{ promoFilmData.releaseDate }</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <button onClick={() => navigate(generatePath(ROUTES.filmPlayer.fullPath, {id: promoFilmData.id}))} className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button onClick={() => navigate(ROUTES.myList.fullPath)} className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">{ userFilmsCount }</span>
-                </button>
-              </div>
-            </div>
+            {promoFilmData
+              ?
+              <>
+                <FilmCardPoster posterImage={promoFilmData.posterImage} name={promoFilmData.name} />
+                <FilmCardDesc {...promoFilmData} />
+              </>
+              : <Spinner />}
           </div>
         </div>
       </section>
@@ -68,20 +54,13 @@ export default function MainScreen({ promoFilmData, userFilmsCount, genres }: Ma
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresFilter genres={genres}/>
+          <GenresFilter genres={genres} />
 
-          <SmallFilmCards cardsCount={maxCardsCount} />
+          {genreFilmsData.length
+            ? <SmallFilmCards filmsData={genreFilmsData} maxCardsCount={maxCardsCount} />
+            : <Spinner />}
 
-          {maxCardsCount < genreFilmsCount &&
-          <div className="catalog__more">
-            <button
-              onClick={() => (dispatch(increaseMaxCardsCount()))}
-              className="catalog__button"
-              type="button"
-            >Show more
-            </button>
-          </div>}
-
+          <ShowMoreButton hide={maxCardsCount >= genreFilmsData.length} increaseCount={increaseMaxCardsCount} />
         </section>
 
         <Footer></Footer>
