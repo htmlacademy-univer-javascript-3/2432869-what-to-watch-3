@@ -13,6 +13,8 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
 import { ROUTES } from '../routes';
+import { AppRoutes } from '../types/app-routes';
+import { generatePath } from 'react-router-dom';
 
 export const fetchFilmsDataAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -121,8 +123,7 @@ export const postReviewAction = createAsyncThunk<void, SetReviewData, {
   'data/postReview',
   async ({ filmId, comment, rating }, { dispatch, extra: api }) => {
     await api.post<ReviewData>(`${APIRoute.Comments}/${filmId}`, { comment, rating });
-    dispatch(redirectToRoute(ROUTES.main.fullPath));
-    // dispatch(redirectToRoute(generatePath(ROUTES.film.fullPath, { id: filmId })));
+    dispatch(redirectToRoute(generatePath(ROUTES.film.fullPath, { id: filmId }) as AppRoutes));
   },
 );
 
