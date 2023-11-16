@@ -1,4 +1,8 @@
-export type Genre = keyof typeof genres;
+import { ValueOf } from '../types/value-of';
+
+export type Genres = typeof genres;
+
+export type Genre = ValueOf<Genres>;
 
 export const genres = {
   'All genres': 'All genres',
@@ -11,4 +15,4 @@ export const genres = {
   Romance: 'Romance',
   'Sci-Fi': 'Sci-Fi',
   Thriller: 'Thriller',
-};
+} as const;

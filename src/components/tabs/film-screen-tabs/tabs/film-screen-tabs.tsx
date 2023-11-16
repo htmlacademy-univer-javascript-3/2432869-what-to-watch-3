@@ -1,10 +1,11 @@
 import './film-screen-tabs.css';
 import { useState } from 'react';
-import { FilmData } from '../../../../mocks/films-data';
+import { FilmData } from '../../../../types/film-data';
 import FilmScreenTabButton from '../film-screen-tab-button';
-import FilmReviews, { FilmReviewsProps } from '../film-reviews/film-reviews';
+import FilmReviews from '../film-reviews/film-reviews';
 import FilmDetails from '../film-details';
 import FilmOverview from '../film-overview';
+import { ReviewData } from '../../../../types/review-data';
 
 const TabsTitles = {
   Overview: 'Overview',
@@ -14,11 +15,12 @@ const TabsTitles = {
 
 type TabsTitles = keyof typeof TabsTitles;
 
-export type FilmScreenTabsProps = FilmReviewsProps & {
+export type FilmScreenTabsProps = {
   filmData: FilmData;
+  reviewsData: ReviewData[];
 };
 
-export default function FilmScreenTabs({ filmData, filmReviewsData }: FilmScreenTabsProps): JSX.Element {
+export default function FilmScreenTabs({ filmData, reviewsData }: FilmScreenTabsProps): JSX.Element {
   const [selectedTab, setSelectedTab] = useState(TabsTitles.Overview as TabsTitles);
 
   const tabsButtons = Object.keys(TabsTitles).map((tabTitle) => (
@@ -42,7 +44,7 @@ export default function FilmScreenTabs({ filmData, filmReviewsData }: FilmScreen
         {
           Overview: <FilmOverview {...filmData} />,
           Details: <FilmDetails {...filmData} />,
-          Reviews: <FilmReviews filmReviewsData={filmReviewsData} />,
+          Reviews: <FilmReviews reviewsData={reviewsData} />,
         }[selectedTab]
       }
     </>

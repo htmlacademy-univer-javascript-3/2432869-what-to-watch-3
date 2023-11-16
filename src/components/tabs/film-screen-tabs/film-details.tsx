@@ -1,14 +1,15 @@
 import formatFilmTime from '../../../shared/format-film-time';
+import StarringList from '../../starring-list';
 
 export type FilmDetailsProps = {
   director: string;
-  starring: string;
-  duration: number;
-  genres: string;
-  releaseDate: number;
+  starring: string[];
+  runTime: number;
+  genre: string;
+  released: number;
 };
 
-export default function FilmDetails({ director, starring, duration, genres, releaseDate }: FilmDetailsProps): JSX.Element {
+export default function FilmDetails({ director, starring, runTime, genre, released }: FilmDetailsProps): JSX.Element {
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
@@ -19,7 +20,7 @@ export default function FilmDetails({ director, starring, duration, genres, rele
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-            { starring.replace(', ', ', \n') }
+            <StarringList starring={starring} />
           </span>
         </p>
       </div>
@@ -27,15 +28,15 @@ export default function FilmDetails({ director, starring, duration, genres, rele
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{ formatFilmTime(duration) }</span>
+          <span className="film-card__details-value">{ formatFilmTime(runTime) }</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>
-          <span className="film-card__details-value">{ genres }</span>
+          <span className="film-card__details-value">{ genre }</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Released</strong>
-          <span className="film-card__details-value">{ releaseDate }</span>
+          <span className="film-card__details-value">{ released }</span>
         </p>
       </div>
     </div>

@@ -1,52 +1,52 @@
-import { NavLink, generatePath, useParams } from 'react-router-dom';
-import AddReviewForm, { AddReviewFormProps } from '../../components/add-review-form';
-import { FilmData } from '../../mocks/films-data';
-import Screen404 from '../404-screen/404-screen';
+import { NavLink, generatePath } from 'react-router-dom';
+import AddReviewForm from '../../components/add-review-form';
 import { ROUTES } from '../../routes';
 import Header from '../../components/header';
+import Spinner from '../../components/spinner/spinner';
+import useFilmByParamId from '../../hooks/use-film-by-param-id';
 
-export type AddReviewScreenProps = AddReviewFormProps & {
-  filmsData: ReadonlyArray<FilmData>;
+export type AddReviewScreenProps = {
+  ratingWidth: number;
 };
 
-export default function AddReviewScreen({ ratingWidth, filmsData }: AddReviewScreenProps): JSX.Element {
-  const params = useParams();
-  const filmId = Number(params.id);
-  const filmData = filmsData.find((film) => film.id === filmId);
-
-  if (!filmData) {
-    return <Screen404 />;
-  }
+export default function AddReviewScreen({ ratingWidth }: AddReviewScreenProps): JSX.Element {
+  const filmData = useFilmByParamId();
 
   return (
-    <section className="film-card film-card--full">
+    <section className="film-card film-card--full" style={{backgroundColor: filmData?.backgroundColor}}>
       <div className="film-card__header">
-        <div className="film-card__bg">
-          <img src={filmData.bgImageSource} alt={filmData.name} />
-        </div>
+        {filmData &&
+          <div className="film-card__bg">
+            <img src={filmData.backgroundImage} alt={filmData.name} />
+          </div>}
 
         <h1 className="visually-hidden">WTW</h1>
 
         <Header>
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <NavLink to={generatePath(ROUTES.film.fullPath, {id: filmData.id})} className="breadcrumbs__link">{ filmData.name }</NavLink>
-              </li>
-              <li className="breadcrumbs__item">
-                <NavLink to={generatePath(ROUTES.filmReview.fullPath, {id: filmData.id})} className="breadcrumbs__link">Add review</NavLink>
-              </li>
-            </ul>
-          </nav>
+          {filmData &&
+            <nav className="breadcrumbs">
+              <ul className="breadcrumbs__list">
+                <li className="breadcrumbs__item">
+                  <NavLink to={generatePath(ROUTES.film.fullPath, {id: filmData.id})} className="breadcrumbs__link">{ filmData.name }</NavLink>
+                </li>
+                <li className="breadcrumbs__item">
+                  <NavLink to={generatePath(ROUTES.filmReview.fullPath, {id: filmData.id})} className="breadcrumbs__link">Add review</NavLink>
+                </li>
+              </ul>
+            </nav>}
         </Header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={filmData.imageSource} alt={filmData.name} width="218" height="327" />
+          {filmData
+            ? <img src={filmData.posterImage} alt={filmData.name} width="218" height="327" />
+            : <Spinner />}
         </div>
       </div>
 
       <div className="add-review">
-        <AddReviewForm ratingWidth={ratingWidth} />
+        {filmData
+          ? <AddReviewForm filmId={filmData.id} ratingWidth={ratingWidth} />
+          : <Spinner />}
       </div>
     </section>
   );
