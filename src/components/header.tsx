@@ -16,6 +16,8 @@ export default function Header({ children, className = '', authScreen = false }:
   let headerContent;
   if (authStatus === AuthStatus.Auth) {
     headerContent = <UserBlock />;
+  } else if (authStatus === AuthStatus.Unknown) {
+    headerContent = null;
   } else if (authScreen) {
     headerContent = <h1 className="page-title user-page__title">Sign In</h1>;
   } else {

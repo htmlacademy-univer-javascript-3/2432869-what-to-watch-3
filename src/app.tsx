@@ -17,7 +17,7 @@ export default function App(props: AppProps): JSX.Element {
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path={ROUTES.main.fullPath} element={<MainScreen {...props as MainScreenProps} />} />
+        <Route path={ROUTES.main.fullPath} element={<MainScreen genres={props.genres} />} />
         <Route path={ROUTES.login.fullPath} element={<SignInScreen />} />
         <Route path={ROUTES.myList.fullPath} element={
           <PrivateRoute>
@@ -27,7 +27,7 @@ export default function App(props: AppProps): JSX.Element {
         />
         <Route path={ROUTES.film.fullPath}>
           <Route index element={<FilmScreen />} />
-          <Route path={ROUTES.filmReview.fullPath} element={<AddReviewScreen {...props as AddReviewScreenProps} />} />
+          <Route path={ROUTES.filmReview.fullPath} element={<AddReviewScreen ratingWidth={props.ratingWidth} />} />
         </Route>
         <Route path={ROUTES.filmPlayer.fullPath} element={<PlayerScreen />} />
         <Route path={ROUTES.notFound.fullPath} element={<Screen404 />} />
