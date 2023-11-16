@@ -25,11 +25,11 @@ export default function FilmScreen(): JSX.Element {
       dispatch(fetchSimilarFilmsDataAction(filmData.id));
       dispatch(fetchReviewsDataAction(filmData.id));
     }
-  }, [filmData]);
+  }, [dispatch, filmData]);
 
   useEffect(() => () => {
     dispatch(loadFilm(undefined));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

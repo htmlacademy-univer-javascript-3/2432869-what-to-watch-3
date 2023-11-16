@@ -10,7 +10,7 @@ export default function useFilmByParamId() {
 
   useEffect(() => {
     dispatch(fetchFilmDataAction(urlParams.id ?? ''));
-  }, [urlParams.id]);
+  }, [dispatch, urlParams.id]);
 
   return useFilmSelector();
 }

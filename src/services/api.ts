@@ -24,6 +24,8 @@ export const createAPI = (): AxiosInstance => {
     return config;
   });
 
+  //добавить очистку токена, если он не валиден
+
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<DetailMessageType>) => {
