@@ -5,7 +5,7 @@ import { ROUTES } from '../routes';
 import { postFavoriteFilmAction } from '../store/api-actions';
 import { getFavoriteFilmsCount } from '../store/films-data/selectors';
 import { getAuthStatus } from '../store/user-process/selectors';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type AddFavoriteButtonProps = {
   filmId: string;
