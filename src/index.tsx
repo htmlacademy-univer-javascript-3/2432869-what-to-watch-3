@@ -18,6 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
+        maxSimilarCardsCount={4}
         ratingWidth={10}
         genres={genres}
       />

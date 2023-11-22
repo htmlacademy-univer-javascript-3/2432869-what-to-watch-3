@@ -6,7 +6,7 @@ export type SignOutButtonProps = {
   classNames?: string;
 };
 
-export default function SignOutButton({ classNames = '' }: SignOutButtonProps) {
+export default function SignOutButton({ classNames = '' }: SignOutButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const handleClick = () => {
     dispatch(logoutAction());

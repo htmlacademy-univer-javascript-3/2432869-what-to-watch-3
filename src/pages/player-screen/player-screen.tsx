@@ -1,9 +1,17 @@
 import './player-screen.css';
-import formatFilmTime from '../../shared/format-film-time';
 import useFilmByParamId from '../../hooks/use-film-by-param-id';
 import Spinner from '../../components/spinner/spinner';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../routes';
+import { useRef } from 'react';
+import RemainingTimer from '../../components/remaining-timer';
+import PlayButton from '../../components/play-button';
+import FullscreenButton from '../../components/fullscreen-button';
 
 export default function PlayerScreen(): JSX.Element {
+  const navigate = useNavigate();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const filmData = useFilmByParamId();
 
   return (
@@ -11,9 +19,20 @@ export default function PlayerScreen(): JSX.Element {
       {filmData
         ?
         <>
-          <video src={filmData.videoLink} className="player__video" poster={filmData.backgroundImage}></video>
+          <video
+            ref={videoRef}
+            src={filmData.videoLink}
+            poster={filmData.backgroundImage}
+            className="player__video"
+            muted={false}
+          >
+          </video>
 
-          <button type="button" className="player__exit">Exit</button>
+          <button onClick={() => navigate(generatePath(ROUTES.film.fullPath, { id: filmData.id }))}
+            type="button" className="player__exit"
+          >
+            Exit
+          </button>
 
           <div className="player__controls">
             <div className="player__controls-row">
@@ -21,24 +40,16 @@ export default function PlayerScreen(): JSX.Element {
                 <progress className="player__progress" value="30" max="100"></progress>
                 <div className="player__toggler player__toggler-left">Toggler</div>
               </div>
-              <div className="player__time-value">{ formatFilmTime(filmData.runTime) }</div>
+              <div className="player__time-value">
+                <RemainingTimer totalSeconds={filmData.runTime * 60} videoRef={videoRef} />
+              </div>
             </div>
 
             <div className="player__controls-row">
-              <button type="button" className="player__play">
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-                <span>Play</span>
-              </button>
+              <PlayButton videoRef={videoRef} />
               <div className="player__name">Transpotting</div>
 
-              <button type="button" className="player__full-screen">
-                <svg viewBox="0 0 27 27" width="27" height="27">
-                  <use xlinkHref="#full-screen"></use>
-                </svg>
-                <span>Full screen</span>
-              </button>
+              <FullscreenButton videoRef={videoRef} />
             </div>
           </div>
         </>

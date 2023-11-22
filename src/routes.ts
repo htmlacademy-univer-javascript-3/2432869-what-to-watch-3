@@ -18,7 +18,7 @@ export const ROUTES = {
   filmPlayer: {
     fullPath: '/player/:id',
   },
-  notFound: {
+  error: {
     fullPath: '*'
   },
 } as const;

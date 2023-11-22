@@ -1,15 +1,15 @@
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import { SmallFilmCards } from '../../components/small-film-cards/small-film-cards';
-import { useFavoriteFilmsSelector } from '../../hooks/selectors';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteFilmsDataAction } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
+import { getFavoriteFilmData } from '../../store/films-data/selectors';
 
 export default function MyListScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-  const favoriteFilmsData = useFavoriteFilmsSelector();
+  const favoriteFilmsData = useAppSelector(getFavoriteFilmData);
 
   useEffect(() => {
     dispatch(fetchFavoriteFilmsDataAction());

@@ -1,16 +1,15 @@
-import { generatePath, useNavigate } from 'react-router-dom';
-import { ROUTES } from '../routes';
 import { PromoFilmData } from '../types/promo-film-data';
-import { useAuthStatusSelector, useFavoritesCountSelector } from '../hooks/selectors';
 import { AuthStatus } from '../consts';
+import { useAppSelector } from '../hooks';
+import { getAuthStatus } from '../store/user-process/selectors';
+import OpenPlayerButton from './open-player-button';
+import AddFavoriteButton from './add-favorite-button';
+import ToAddReviewButton from './to-add-review-button';
 
 export type FilmCardDescProps = PromoFilmData;
 
-export default function FilmCardDesc({ id, name, genre, released }: FilmCardDescProps) {
-  const navigate = useNavigate();
-
-  const authStatus = useAuthStatusSelector();
-  const favoriteFilmsCount = useFavoritesCountSelector();
+export default function FilmCardDesc({ id, name, genre, released, isFavorite }: FilmCardDescProps): JSX.Element {
+  const authStatus = useAppSelector(getAuthStatus);
 
   return (
     <div className="film-card__desc">
@@ -21,23 +20,10 @@ export default function FilmCardDesc({ id, name, genre, released }: FilmCardDesc
       </p>
 
       <div className="film-card__buttons">
-        <button onClick={() => navigate(generatePath(ROUTES.filmPlayer.fullPath, { id }))} className="btn btn--play film-card__button" type="button">
-          <svg viewBox="0 0 19 19" width="19" height="19">
-            <use xlinkHref="#play-s"></use>
-          </svg>
-          <span>Play</span>
-        </button>
+        <OpenPlayerButton filmId={id} />
+        <AddFavoriteButton filmId={id} isFilmFavorite={isFavorite} />
         {authStatus === AuthStatus.Auth &&
-          <>
-            <button onClick={() => navigate(ROUTES.myList.fullPath)} className="btn btn--list film-card__button" type="button">
-              <svg viewBox="0 0 19 20" width="19" height="20">
-                <use xlinkHref="#add"></use>
-              </svg>
-              <span>My list</span>
-              <span className="film-card__count">{ favoriteFilmsCount }</span>
-            </button>
-            <button onClick={() => navigate(ROUTES.filmReview.relativePath)} className="btn film-card__button">Add review</button>
-          </>}
+          <ToAddReviewButton filmId={id} />}
       </div>
     </div>
   );

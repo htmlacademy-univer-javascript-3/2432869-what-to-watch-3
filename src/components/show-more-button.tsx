@@ -1,9 +1,9 @@
 type ShowMoreButtonProps = {
   hide: boolean;
-  increaseCount: () => void;
+  handleClick: () => void;
 }
 
-export default function ShowMoreButton({ hide, increaseCount }: ShowMoreButtonProps): JSX.Element | null {
+export default function ShowMoreButton({ hide, handleClick }: ShowMoreButtonProps): JSX.Element | null {
   if (hide) {
     return null;
   }
@@ -11,7 +11,7 @@ export default function ShowMoreButton({ hide, increaseCount }: ShowMoreButtonPr
   return (
     <div className="catalog__more">
       <button
-        onClick={increaseCount}
+        onClick={handleClick}
         className="catalog__button"
         type="button"
       >Show more

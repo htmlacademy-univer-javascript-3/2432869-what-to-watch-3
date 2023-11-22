@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { SmallFilmCard } from './small-film-card';
 import { ShortFilmData } from '../../types/short-film-data';
 
@@ -10,7 +10,8 @@ export type SmallFilmCardsProps = {
 
 export function SmallFilmCards({ filmsData, maxCardsCount = 8 }: SmallFilmCardsProps): JSX.Element {
   const [hoveredCardId, setHoveredCardId] = useState<string | undefined>(undefined);
-  const onHoverHandler = (cardId: string | undefined) => setHoveredCardId(cardId);
+  const handleMouseEnter = useCallback((cardId: string | undefined) => setHoveredCardId(cardId), []);
+  const handleMouseLeave = useCallback(() => handleMouseEnter(undefined), [handleMouseEnter]);
 
   return (
     <div className="catalog__films-list">
@@ -19,8 +20,8 @@ export function SmallFilmCards({ filmsData, maxCardsCount = 8 }: SmallFilmCardsP
           <SmallFilmCard
             key={filmData.id}
             hoveredCardId={hoveredCardId}
-            handleMouseEnter={onHoverHandler}
-            handleMouseLeave={() => onHoverHandler(undefined)}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
             {...filmData}
           />
         )) }

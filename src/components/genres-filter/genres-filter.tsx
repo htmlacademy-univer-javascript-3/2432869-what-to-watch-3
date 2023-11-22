@@ -1,6 +1,7 @@
+import { useCallback, useEffect } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { Genre, Genres } from '../../mocks/genres';
-import { setGenre } from '../../store/action';
+import { setGenre } from '../../store/genre-process/genre-process';
 import { GenreButton } from './genre-button/genre-button';
 
 export type GenresFilterProps = {
@@ -9,8 +10,11 @@ export type GenresFilterProps = {
 
 export default function GenresFilter({ genres }: GenresFilterProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const handleButtonClick = useCallback((genre: Genre) => dispatch(setGenre(genre)), [dispatch]);
 
-  const handleButtonClick = (genre: Genre) => () => dispatch(setGenre(genre));
+  useEffect(() => () => {
+    dispatch(setGenre('All genres'));
+  }, [dispatch]);
 
   return (
     <ul className="catalog__genres-list">
@@ -18,7 +22,7 @@ export default function GenresFilter({ genres }: GenresFilterProps): JSX.Element
         <GenreButton
           key={genre}
           genre={genre}
-          handleClick={handleButtonClick(genre)}
+          handleClick={handleButtonClick}
         />
       )) }
     </ul>
