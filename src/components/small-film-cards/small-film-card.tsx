@@ -3,6 +3,7 @@ import { Link, generatePath } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import VideoPlayer from '../video-player';
 import { useState, useEffect } from 'react';
+import { TimeoutId } from '../../types/timeout-id';
 
 export type SmallFilmCardProps = {
   id: string;
@@ -19,7 +20,7 @@ export function SmallFilmCard({ id, previewImage, name, previewVideoLink, hovere
   const [playTrailer, setPlayTrailer] = useState(false);
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let timeoutId: TimeoutId;
 
     if (id === hoveredCardId) {
       timeoutId = setTimeout(() => {

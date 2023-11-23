@@ -7,18 +7,22 @@ import FilmCardDesc from '../../components/film-card-desc';
 import FilmCardPoster from '../../components/film-card-poster';
 import Spinner from '../../components/spinner/spinner';
 import useFilmByParamId from '../../hooks/use-film-by-param-id';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsDataAction, fetchSimilarFilmsDataAction } from '../../store/api-actions';
-import { useReviewsSelector, useSimilarFilmsSelector } from '../../hooks/selectors';
-import { loadFilm } from '../../store/action';
+import { getSimilarFilmData } from '../../store/films-data/selectors';
+import { getReviewsData } from '../../store/reviews-data/selectors';
+import { clearFilmData } from '../../store/films-data/films-data';
 
+export type FilmScreenProps = {
+  maxSimilarCardsCount: number;
+};
 
-export default function FilmScreen(): JSX.Element {
+export default function FilmScreen({ maxSimilarCardsCount }: FilmScreenProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const filmData = useFilmByParamId();
-  const similarFilmsData = useSimilarFilmsSelector();
-  const reviewsData = useReviewsSelector();
+  const similarFilmsData = useAppSelector(getSimilarFilmData);
+  const reviewsData = useAppSelector(getReviewsData);
 
   useEffect(() => {
     if (filmData) {
@@ -28,7 +32,7 @@ export default function FilmScreen(): JSX.Element {
   }, [dispatch, filmData]);
 
   useEffect(() => () => {
-    dispatch(loadFilm(undefined));
+    dispatch(clearFilmData());
   }, [dispatch]);
 
   return (
@@ -71,7 +75,7 @@ export default function FilmScreen(): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           {filmData
-            ? <SmallFilmCards filmsData={similarFilmsData} />
+            ? <SmallFilmCards maxCardsCount={maxSimilarCardsCount} filmsData={similarFilmsData} />
             : <Spinner />}
         </section>
 

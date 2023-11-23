@@ -1,29 +1,17 @@
 import GenresFilter, { GenresFilterProps } from '../../components/genres-filter/genres-filter';
-import { SmallFilmCards } from '../../components/small-film-cards/small-film-cards';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import { useFilmsByGenreSelector, useGenreSelector, usePromoFilmSelector } from '../../hooks/selectors';
-import { MAX_CARDS_COUNT_STEP } from '../../consts';
-import { useEffect, useState } from 'react';
-import ShowMoreButton from '../../components/show-more-button';
 import Spinner from '../../components/spinner/spinner';
 import FilmCardDesc from '../../components/film-card-desc';
 import FilmCardPoster from '../../components/film-card-poster';
+import { useAppSelector } from '../../hooks';
+import { getPromoFilmData } from '../../store/films-data/selectors';
+import GenreFilmCards from '../../components/genre-film-cards';
 
 export type MainScreenProps = GenresFilterProps;
 
 export default function MainScreen({ genres }: MainScreenProps): JSX.Element {
-  const [maxCardsCount, setMaxCardsCount] = useState(MAX_CARDS_COUNT_STEP);
-  const resetMaxCardsCount = () => setMaxCardsCount(MAX_CARDS_COUNT_STEP);
-  const increaseMaxCardsCount = () => setMaxCardsCount((prev) => prev + MAX_CARDS_COUNT_STEP);
-
-  const promoFilmData = usePromoFilmSelector();
-
-  const genre = useGenreSelector();
-  const genreFilmsData = useFilmsByGenreSelector(genre);
-  useEffect(() => {
-    resetMaxCardsCount();
-  }, [genre]);
+  const promoFilmData = useAppSelector(getPromoFilmData);
 
   return (
     <>
@@ -56,11 +44,7 @@ export default function MainScreen({ genres }: MainScreenProps): JSX.Element {
 
           <GenresFilter genres={genres} />
 
-          {genreFilmsData.length
-            ? <SmallFilmCards filmsData={genreFilmsData} maxCardsCount={maxCardsCount} />
-            : <Spinner />}
-
-          <ShowMoreButton hide={maxCardsCount >= genreFilmsData.length} increaseCount={increaseMaxCardsCount} />
+          <GenreFilmCards />
         </section>
 
         <Footer></Footer>

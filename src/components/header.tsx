@@ -1,9 +1,10 @@
 import { PropsWithChildren } from 'react';
 import Logo from './logo';
 import UserBlock from './user-block';
-import { useAuthStatusSelector } from '../hooks/selectors';
 import { AuthStatus } from '../consts';
 import SignInLink from './sign-in-link/sign-in-link';
+import { useAppSelector } from '../hooks';
+import { getAuthStatus } from '../store/user-process/selectors';
 
 export type HeaderProps = PropsWithChildren<{
   className?: string;
@@ -11,7 +12,7 @@ export type HeaderProps = PropsWithChildren<{
 }>;
 
 export default function Header({ children, className = '', authScreen = false }: HeaderProps): JSX.Element {
-  const authStatus = useAuthStatusSelector();
+  const authStatus = useAppSelector(getAuthStatus);
 
   let headerContent;
   if (authStatus === AuthStatus.Auth) {

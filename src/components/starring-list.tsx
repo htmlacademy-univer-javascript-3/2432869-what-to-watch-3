@@ -2,7 +2,7 @@ export type StarringListProps = {
   starring: string[];
 };
 
-export default function StarringList({ starring }: StarringListProps) {
+export default function StarringList({ starring }: StarringListProps): JSX.Element {
   return (
     <>
       {starring.map((starName, index) => (

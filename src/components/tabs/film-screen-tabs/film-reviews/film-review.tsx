@@ -1,3 +1,5 @@
+import formatDate from '../../../../shared/format-date';
+
 export type FilmReviewProps = {
   comment: string;
   user: string;
@@ -13,7 +15,7 @@ export default function FilmReview({ comment, user, date, rating }: FilmReviewPr
 
         <footer className="review__details">
           <cite className="review__author">{ user }</cite>
-          <time className="review__date" dateTime={date}>{ date }</time>
+          <time className="review__date" dateTime={date}>{ formatDate(date) }</time>
         </footer>
       </blockquote>
 

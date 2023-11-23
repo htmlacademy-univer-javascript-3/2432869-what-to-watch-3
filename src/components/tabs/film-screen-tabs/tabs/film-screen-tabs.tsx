@@ -1,5 +1,5 @@
 import './film-screen-tabs.css';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FilmData } from '../../../../types/film-data';
 import FilmScreenTabButton from '../film-screen-tab-button';
 import FilmReviews from '../film-reviews/film-reviews';
@@ -13,7 +13,7 @@ const TabsTitles = {
   Reviews: 'Reviews',
 };
 
-type TabsTitles = keyof typeof TabsTitles;
+export type FilmTabsTitles = keyof typeof TabsTitles;
 
 export type FilmScreenTabsProps = {
   filmData: FilmData;
@@ -21,14 +21,15 @@ export type FilmScreenTabsProps = {
 };
 
 export default function FilmScreenTabs({ filmData, reviewsData }: FilmScreenTabsProps): JSX.Element {
-  const [selectedTab, setSelectedTab] = useState(TabsTitles.Overview as TabsTitles);
+  const [selectedTab, setSelectedTab] = useState(TabsTitles.Overview as FilmTabsTitles);
+  const handleButtonClick = useCallback((tabTitle: FilmTabsTitles) => setSelectedTab(tabTitle), []);
 
   const tabsButtons = Object.keys(TabsTitles).map((tabTitle) => (
     <FilmScreenTabButton
       key={tabTitle}
       tabTitle={tabTitle}
       selectedTab={selectedTab}
-      handleClick={() => setSelectedTab(tabTitle as TabsTitles)}
+      handleClick={handleButtonClick}
     />
   ));
 

@@ -1,4 +1,4 @@
-import { Status } from '../consts';
+import { FavoriteStatus } from '../consts';
 import { ValueOf } from './value-of';
 
-export type Status = ValueOf<typeof Status>;
+export type FavoriteStatus = ValueOf<typeof FavoriteStatus>;

@@ -1,4 +1,4 @@
-.screen404__wrapper {
+.error-screen__wrapper {
   height: 100vh;
   display: flex;
   flex-direction: row;
@@ -8,10 +8,10 @@
   background-color: #160202;
 }
 
-.screen404__title {
+.error-screen__title {
   color: #d9cd8d;
 }
 
-.screen404__link {
+.error-screen__link {
   color: #ffdc22;
 }

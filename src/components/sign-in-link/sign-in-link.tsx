@@ -6,7 +6,7 @@ export type SignInLinkProps = {
   classNames?: '';
 };
 
-export default function SignInLink({ classNames = '' }: SignInLinkProps) {
+export default function SignInLink({ classNames = '' }: SignInLinkProps): JSX.Element {
   return (
     <Link to={ROUTES.login.fullPath} className={`sign-in-link ${classNames}`}>
       Sign in
