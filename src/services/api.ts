@@ -37,7 +37,6 @@ const redirectToLoginOnExpiredToken = (error: AxiosError<DetailMessageType>) => 
     && store.getState()[NameSpace.User].authStatus === AuthStatus.Auth) {
     store.dispatch(checkAuthAction);
     store.dispatch(redirectToRoute(ROUTES.login.fullPath));
-    //store.dispatch(loginAction({ email: ??, password: ?? }));
   }
 
   throw error;
