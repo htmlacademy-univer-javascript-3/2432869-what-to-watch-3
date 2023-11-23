@@ -30,6 +30,7 @@ export default function AddFavoriteButton({ filmId, isFilmFavorite = false }: Ad
       filmId: filmId,
       status: isFavorite ? FavoriteStatus.Delete : FavoriteStatus.Set,
     }));
+
     setIsFavorite((prev) => !prev);
   };
 
