@@ -4,6 +4,7 @@ import { internet } from 'faker';
 
 describe('Component: Copyright', () => {
   const mockVideoPause = vi.fn();
+  HTMLVideoElement.prototype.play = () => new Promise((res) => res());
   HTMLVideoElement.prototype.pause = mockVideoPause;
 
   beforeEach(() => {

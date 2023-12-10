@@ -1,4 +1,4 @@
-import { Genres } from "../consts";
+import { Genres } from '../consts';
 import { ValueOf } from './value-of';
 
 export type Genres = typeof Genres;
