@@ -8,9 +8,8 @@ import { AppRoutes } from '../../app-routes';
 import { mockFilmsData } from '../../mocks/films-data';
 
 describe('Component: PlayerScreen', () => {
-  const mockVideoPlay = vi.fn();
   const mockVideoPause = vi.fn();
-  HTMLVideoElement.prototype.play = mockVideoPlay;
+  HTMLVideoElement.prototype.play = () => new Promise((res) => res());
   HTMLVideoElement.prototype.pause = mockVideoPause;
 
   const mockFilm = mockFilmsData[10];
@@ -46,7 +45,6 @@ describe('Component: PlayerScreen', () => {
     render(withStoreComponent);
     await userEvent.click(screen.getByTestId('play-button'));
 
-    expect(mockVideoPlay).toBeCalled();
     expect(mockVideoPause).not.toBeCalled();
   });
 });

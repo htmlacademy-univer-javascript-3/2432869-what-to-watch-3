@@ -27,6 +27,6 @@ describe('Component: SmallFilmCards', () => {
     expect(screen.getByText(/©/i)).toBeInTheDocument();
     setTimeout(() => {
       expect(screen.getAllByTestId('small-film-card')).toHaveLength(MAX_CARDS_COUNT_STEP);
-    });
+    }, 50);
   });
 });

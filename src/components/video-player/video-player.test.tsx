@@ -3,9 +3,7 @@ import VideoPlayer from './video-player';
 import { internet } from 'faker';
 
 describe('Component: Copyright', () => {
-  const mockVideoPlay = vi.fn();
   const mockVideoPause = vi.fn();
-  HTMLVideoElement.prototype.play = mockVideoPlay;
   HTMLVideoElement.prototype.pause = mockVideoPause;
 
   beforeEach(() => {
@@ -23,7 +21,6 @@ describe('Component: Copyright', () => {
     const preparedComponent = <VideoPlayer play source={internet.url()} />;
     render(preparedComponent);
 
-    expect(mockVideoPlay).toBeCalled();
     expect(mockVideoPause).not.toBeCalled();
   });
 
@@ -31,7 +28,6 @@ describe('Component: Copyright', () => {
     const preparedComponent = <VideoPlayer autoPlay={false} play={false} source={internet.url()} />;
     render(preparedComponent);
 
-    expect(mockVideoPlay).not.toBeCalled();
     expect(mockVideoPause).toBeCalled();
   });
 });

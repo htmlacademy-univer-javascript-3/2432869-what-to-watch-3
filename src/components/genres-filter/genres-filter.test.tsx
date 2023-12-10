@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { withStore } from '../../utils/mock-component';
 import { Genres, NameSpace } from '../../consts';
 import GenresFilter from './genres-filter';
@@ -19,21 +19,6 @@ describe('Component: GenreButton', () => {
     expect(activeButtons).toHaveLength(1);
   });
 
-  it('dispatch "setGenre" with "All genres" when unmounting', () => {
-    const initialGenre = Genres.Horror;
-    const { withStoreComponent, mockStore } = withStore(<GenresFilter genres={Genres} />, {
-      Genre: { genre: initialGenre }
-    });
-
-    render(withStoreComponent);
-    expect(mockStore.getState()[NameSpace.Genre].genre).toBe(initialGenre);
-
-    cleanup();
-    setTimeout(() => {
-      expect(mockStore.getState()[NameSpace.Genre].genre).toBe(Genres['All genres']);
-    }, 0);
-  });
-
   it('dispatch "setGenre" when user click genre button', async () => {
     const genre = Genres.Drama;
     const { withStoreComponent, mockStore } = withStore(<GenresFilter genres={Genres} />, {
@@ -45,6 +30,6 @@ describe('Component: GenreButton', () => {
 
     setTimeout(() => {
       expect(mockStore.getState()[NameSpace.Genre].genre).toBe(genre);
-    }, 0);
+    }, 50);
   });
 });

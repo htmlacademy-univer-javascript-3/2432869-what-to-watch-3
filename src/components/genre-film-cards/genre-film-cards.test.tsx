@@ -24,7 +24,7 @@ describe('Component: SmallFilmCards', () => {
     setTimeout(() => {
       expect(screen.getAllByTestId('small-film-card')).toHaveLength(MAX_CARDS_COUNT_STEP);
       expect(screen.getByTestId('show-more-button')).toBeInTheDocument();
-    });
+    }, 50);
   });
 
   it('increase max cards count when user click "show more button"', () => {
@@ -39,7 +39,7 @@ describe('Component: SmallFilmCards', () => {
     setTimeout(() => {
       userEvent.click(screen.getByTestId('show-more-button'));
       expect(screen.getAllByTestId('small-film-card')).toHaveLength(expectedCardsCount);
-    });
+    }, 50);
   });
 
   it('hide "show more button" when there are no more hidden cards', () => {
@@ -53,7 +53,7 @@ describe('Component: SmallFilmCards', () => {
     setTimeout(() => {
       userEvent.click(screen.getByTestId('show-more-button'));
       expect(screen.getByTestId('show-more-button')).not.toBeInTheDocument();
-    });
+    }, 50);
   });
 
   it('filter film cards by genre in state', () => {
@@ -71,6 +71,6 @@ describe('Component: SmallFilmCards', () => {
       expectedFilmsNames.forEach((filmName) => {
         expect(screen.getByText(filmName)).toBeInTheDocument();
       });
-    });
+    }, 50);
   });
 });
