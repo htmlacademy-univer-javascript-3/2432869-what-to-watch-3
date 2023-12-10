@@ -1,17 +1,15 @@
 import { SmallFilmCards } from '../../components/small-film-cards/small-film-cards';
 import FilmScreenTabs from '../../components/tabs/film-screen-tabs/tabs/film-screen-tabs';
-import Header from '../../components/header';
-import Footer from '../../components/footer';
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 import { useEffect } from 'react';
-import FilmCardDesc from '../../components/film-card-desc';
-import FilmCardPoster from '../../components/film-card-poster';
+import FilmCardDesc from '../../components/film-card-desc/film-card-desc';
+import FilmCardPoster from '../../components/film-card-poster/film-card-poster';
 import Spinner from '../../components/spinner/spinner';
-import useFilmByParamId from '../../hooks/use-film-by-param-id';
+import useFilmByParamId from '../../hooks/use-film-by-param-id/use-film-by-param-id';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchReviewsDataAction, fetchSimilarFilmsDataAction } from '../../store/api-actions';
 import { getSimilarFilmData } from '../../store/films-data/selectors';
-import { getReviewsData } from '../../store/reviews-data/selectors';
-import { clearFilmData } from '../../store/films-data/films-data';
 
 export type FilmScreenProps = {
   maxSimilarCardsCount: number;
@@ -22,7 +20,6 @@ export default function FilmScreen({ maxSimilarCardsCount }: FilmScreenProps): J
 
   const filmData = useFilmByParamId();
   const similarFilmsData = useAppSelector(getSimilarFilmData);
-  const reviewsData = useAppSelector(getReviewsData);
 
   useEffect(() => {
     if (filmData) {
@@ -30,10 +27,6 @@ export default function FilmScreen({ maxSimilarCardsCount }: FilmScreenProps): J
       dispatch(fetchReviewsDataAction(filmData.id));
     }
   }, [dispatch, filmData]);
-
-  useEffect(() => () => {
-    dispatch(clearFilmData());
-  }, [dispatch]);
 
   return (
     <>
@@ -58,24 +51,23 @@ export default function FilmScreen({ maxSimilarCardsCount }: FilmScreenProps): J
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             {filmData
-              ?
-              <>
-                <FilmCardPoster posterImage={filmData.posterImage} name={filmData.name} big />
-                <div className="film-card__desc">
-                  <FilmScreenTabs filmData={filmData} reviewsData={reviewsData} />
-                </div>
-              </>
+              ? <FilmCardPoster posterImage={filmData.posterImage} name={filmData.name} big />
               : <Spinner />}
+            <div className="film-card__desc">
+              <FilmScreenTabs />
+            </div>
           </div>
         </div>
       </section>
 
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          {filmData
-            ? <SmallFilmCards maxCardsCount={maxSimilarCardsCount} filmsData={similarFilmsData} />
+          {similarFilmsData
+            ?
+            <>
+              {!!similarFilmsData.length && <h2 className="catalog__title">More like this</h2>}
+              <SmallFilmCards maxCardsCount={maxSimilarCardsCount} filmsData={similarFilmsData} />
+            </>
             : <Spinner />}
         </section>
 

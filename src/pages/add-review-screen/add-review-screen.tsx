@@ -1,9 +1,9 @@
 import { NavLink, generatePath } from 'react-router-dom';
-import AddReviewForm from '../../components/add-review-form';
-import { ROUTES } from '../../routes';
-import Header from '../../components/header';
+import AddReviewForm from '../../components/add-review-form/add-review-form';
+import { AppRoutes } from '../../app-routes';
+import Header from '../../components/header/header';
 import Spinner from '../../components/spinner/spinner';
-import useFilmByParamId from '../../hooks/use-film-by-param-id';
+import useFilmByParamId from '../../hooks/use-film-by-param-id/use-film-by-param-id';
 
 export type AddReviewScreenProps = {
   ratingWidth: number;
@@ -27,10 +27,10 @@ export default function AddReviewScreen({ ratingWidth }: AddReviewScreenProps): 
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <NavLink to={generatePath(ROUTES.film.fullPath, {id: filmData.id})} className="breadcrumbs__link">{ filmData.name }</NavLink>
+                  <NavLink to={generatePath(AppRoutes.Film.FullPath, {id: filmData.id})} className="breadcrumbs__link">{ filmData.name }</NavLink>
                 </li>
                 <li className="breadcrumbs__item">
-                  <NavLink to={generatePath(ROUTES.filmReview.fullPath, {id: filmData.id})} className="breadcrumbs__link">Add review</NavLink>
+                  <NavLink to={generatePath(AppRoutes.FilmReview.FullPath, {id: filmData.id})} className="breadcrumbs__link">Add review</NavLink>
                 </li>
               </ul>
             </nav>}
