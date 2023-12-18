@@ -1,6 +1,6 @@
 import './sign-in-link.css';
 import { Link } from 'react-router-dom';
-import { ROUTES } from '../../routes';
+import { AppRoutes } from '../../app-routes';
 
 export type SignInLinkProps = {
   classNames?: '';
@@ -8,7 +8,7 @@ export type SignInLinkProps = {
 
 export default function SignInLink({ classNames = '' }: SignInLinkProps): JSX.Element {
   return (
-    <Link to={ROUTES.login.fullPath} className={`sign-in-link ${classNames}`}>
+    <Link to={AppRoutes.Login.FullPath} className={`sign-in-link ${classNames}`} data-testid={'sign-in-link'}>
       Sign in
     </Link>
   );

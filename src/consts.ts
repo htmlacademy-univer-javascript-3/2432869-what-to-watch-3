@@ -1,5 +1,7 @@
 export const MAX_CARDS_COUNT_STEP = 8;
 
+export const STANDART_ERROR_MESSAGE = 'An error occured';
+
 export const AuthStatus = {
   Auth: 'Auth',
   NoAuth: 'NoAuth',
@@ -16,15 +18,15 @@ export const APIRoute = {
 } as const;
 
 export const FavoriteStatus = {
-  Set: 1,
   Delete: 0,
+  Set: 1,
 } as const;
 
 export const NameSpace = {
   Error: 'Error',
   Genre: 'Genre',
-  Video: 'Video',
   FilmsData: 'FilmsData',
+  FavoriteFilmsData: 'FavoriteFilmsData',
   ReviewsData: 'ReviewsData',
   User: 'User',
 } as const;
@@ -38,4 +40,17 @@ export const ErrorCodesDesc: {[key: number]: string} = {
   502: 'Bad Gateway',
   503: 'Service Unavailable',
   504: 'Gateway Timeout',
+} as const;
+
+export const Genres = {
+  'All genres': 'All genres',
+  Comedy: 'Comedy',
+  Crime: 'Crime',
+  Documentary: 'Documentary',
+  Drama: 'Drama',
+  Horror: 'Horror',
+  'Kids & Family': 'Kids & Family',
+  Romance: 'Romance',
+  'Sci-Fi': 'Sci-Fi',
+  Thriller: 'Thriller',
 } as const;

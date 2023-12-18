@@ -1,11 +1,15 @@
-import FilmReview from './film-review';
-import { ReviewData } from '../../../../types/review-data';
+import { useAppSelector } from '../../../../hooks';
+import { getReviewsData } from '../../../../store/reviews-data/selectors';
+import Spinner from '../../../spinner/spinner';
+import FilmReview from '../../../film-review/film-review';
 
-export type FilmReviewsProps = {
-  reviewsData: ReviewData[];
-}
+export default function FilmReviews(): JSX.Element {
+  const reviewsData = useAppSelector(getReviewsData);
 
-export default function FilmReviews({ reviewsData }: FilmReviewsProps): JSX.Element {
+  if (!reviewsData) {
+    return <Spinner />;
+  }
+
   const reviewsColumns: JSX.Element[] = [];
   let reviews: JSX.Element[] = [];
   for (let i = 0; i < reviewsData.length; i++) {
@@ -15,7 +19,7 @@ export default function FilmReviews({ reviewsData }: FilmReviewsProps): JSX.Elem
 
     if (i % 3 === 2 || i + 1 === reviewsData.length) {
       reviewsColumns.push((
-        <div key={-reviewsData[i].id} className="film-card__reviews-col">
+        <div key={`column-${reviewsData[i].id}`} className="film-card__reviews-col" data-testid={'reviews-column'}>
           { ...reviews }
         </div>
       ));
@@ -24,7 +28,7 @@ export default function FilmReviews({ reviewsData }: FilmReviewsProps): JSX.Elem
   }
 
   return (
-    <div className="film-card__reviews film-card__row">
+    <div className="film-card__reviews film-card__row" data-testid={'film-reviews'}>
       { reviewsColumns }
     </div>
   );

@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
-import { Genre } from '../../mocks/genres';
-
-type GenreProcessState = {
-  genre: Genre;
-}
+import { Genre } from '../../types/genre';
+import { GenreProcessState } from '../../types/state';
 
 const initialState: GenreProcessState = {
   genre: 'All genres',
