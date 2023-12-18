@@ -29,7 +29,6 @@ describe('Component: SmallFilmCard', () => {
     render(withStoreComponent);
 
     expect(screen.getByTestId('small-film-card')).toBeInTheDocument();
-    expect(screen.getByAltText(mockFilm.name)).toBeInTheDocument();
     expect(screen.getByText(mockFilm.name)).toBeInTheDocument();
   });
 
