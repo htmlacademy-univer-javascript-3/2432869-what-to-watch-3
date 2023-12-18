@@ -1,30 +1,30 @@
 import { useCallback, useState } from 'react';
-import { SmallFilmCard } from './small-film-card';
-import { ShortFilmData } from '../../types/short-film-data';
+import { SmallFilmCard } from '../small-film-card/small-film-card';
+import { FilmShortData } from '../../types/film-short-data';
 
 export type SmallFilmCardsProps = {
-  filmsData: ShortFilmData[];
+  filmsData: FilmShortData[];
   maxCardsCount?: number;
-  resetMaxCardsCount?: () => void;
 };
 
-export function SmallFilmCards({ filmsData, maxCardsCount = 8 }: SmallFilmCardsProps): JSX.Element {
+export function SmallFilmCards({ filmsData, maxCardsCount = 100 }: SmallFilmCardsProps): JSX.Element {
   const [hoveredCardId, setHoveredCardId] = useState<string | undefined>(undefined);
   const handleMouseEnter = useCallback((cardId: string | undefined) => setHoveredCardId(cardId), []);
   const handleMouseLeave = useCallback(() => handleMouseEnter(undefined), [handleMouseEnter]);
 
-  return (
-    <div className="catalog__films-list">
-      { filmsData.map((filmData: ShortFilmData, index: number) =>
-        index < maxCardsCount && (
-          <SmallFilmCard
-            key={filmData.id}
-            hoveredCardId={hoveredCardId}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
-            {...filmData}
-          />
-        )) }
-    </div>
-  );
+  return filmsData.length
+    ? (
+      <div className="catalog__films-list">
+        { filmsData.map((filmData: FilmShortData, index: number) =>
+          index < maxCardsCount && (
+            <SmallFilmCard
+              key={filmData.id}
+              hoveredCardId={hoveredCardId}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              {...filmData}
+            />
+          )) }
+      </div>)
+    : (<h3>Фильмы не найдены</h3>);
 }

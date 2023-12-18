@@ -1,21 +1,51 @@
 import './player-screen.css';
-import useFilmByParamId from '../../hooks/use-film-by-param-id';
+import useFilmByParamId from '../../hooks/use-film-by-param-id/use-film-by-param-id';
 import Spinner from '../../components/spinner/spinner';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../routes';
-import { useRef } from 'react';
-import RemainingTimer from '../../components/remaining-timer';
-import PlayButton from '../../components/play-button';
-import FullscreenButton from '../../components/fullscreen-button';
+import { AppRoutes } from '../../app-routes';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import RemainingTimer from '../../components/remaining-timer/remaining-timer';
+import PlayButton from '../../components/play-button/play-button';
+import FullscreenButton from '../../components/fullscreen-button/fullscreen-button';
+import PlayerProgress from '../../components/player-progress/player-progress';
+import { TimeoutId } from '../../types/timeout-id';
 
 export default function PlayerScreen(): JSX.Element {
   const navigate = useNavigate();
+  const playerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const filmData = useFilmByParamId();
 
+  const [isPlaying, setPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  const handlePlayButtonClick = useCallback(() => {
+    videoRef.current?.play()
+      .then(() => setPlaying(true));
+  }, []);
+  const handlePauseButtonClick = useCallback(() => {
+    videoRef.current?.pause();
+    setPlaying(false);
+  }, []);
+  const handleFullscreenButtonClick = useCallback(() => playerRef.current?.requestFullscreen(), []);
+
+  useEffect(() => {
+    let id: TimeoutId | undefined = undefined;
+    if (isPlaying) {
+      id = setInterval(() => setCurrentTime(videoRef.current?.currentTime ?? 0), 500);
+    } else {
+      clearInterval(id);
+      setCurrentTime(videoRef.current?.currentTime ?? 0);
+    }
+
+    return () => {
+      clearInterval(id);
+    };
+  }, [isPlaying]);
+
   return (
-    <div className="player">
+    <div ref={playerRef} className="player">
       {filmData
         ?
         <>
@@ -28,28 +58,28 @@ export default function PlayerScreen(): JSX.Element {
           >
           </video>
 
-          <button onClick={() => navigate(generatePath(ROUTES.film.fullPath, { id: filmData.id }))}
-            type="button" className="player__exit"
+          <button
+            onClick={() => navigate(generatePath(AppRoutes.Film.FullPath, { id: filmData.id }))}
+            type="button"
+            className="player__exit"
+            data-testid={'player-exit-button'}
           >
             Exit
           </button>
 
           <div className="player__controls">
             <div className="player__controls-row">
-              <div className="player__time">
-                <progress className="player__progress" value="30" max="100"></progress>
-                <div className="player__toggler player__toggler-left">Toggler</div>
-              </div>
+              <PlayerProgress totalSeconds={videoRef.current?.duration || 0.1} currentTime={currentTime} />
               <div className="player__time-value">
-                <RemainingTimer totalSeconds={filmData.runTime * 60} videoRef={videoRef} />
+                <RemainingTimer totalSeconds={videoRef.current?.duration || 0.1} currentTime={currentTime} />
               </div>
             </div>
 
             <div className="player__controls-row">
-              <PlayButton videoRef={videoRef} />
+              <PlayButton isPlaying={isPlaying} onPlay={handlePlayButtonClick} onPause={handlePauseButtonClick} />
               <div className="player__name">Transpotting</div>
 
-              <FullscreenButton videoRef={videoRef} />
+              <FullscreenButton onFullscreen={handleFullscreenButtonClick} />
             </div>
           </div>
         </>

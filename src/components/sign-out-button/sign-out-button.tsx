@@ -13,7 +13,7 @@ export default function SignOutButton({ classNames = '' }: SignOutButtonProps): 
   };
 
   return (
-    <button onClick={handleClick} className={`user-block__link sign-out-button ${classNames}`}>
+    <button onClick={handleClick} className={`user-block__link sign-out-button ${classNames}`} data-testid={'sign-out-button'}>
       Sign out
     </button>
   );
