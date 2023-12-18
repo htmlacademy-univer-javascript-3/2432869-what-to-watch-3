@@ -5,7 +5,7 @@ import { AuthStatus, Genres, MAX_CARDS_COUNT_STEP } from '../../consts';
 import MainScreen from './main-screen';
 import { mockPromoFilmData } from '../../mocks/promo-film-data';
 
-describe('Component: SmallFilmCards', () => {
+describe('Component: MainScreen', () => {
   it('renders correctly', () => {
     const preparedComponent = withHistory(<MainScreen genres={Genres} />);
     const { withStoreComponent } = withStore(preparedComponent, {
@@ -25,8 +25,6 @@ describe('Component: SmallFilmCards', () => {
     expect(screen.getByTestId('add-review-link')).toBeInTheDocument();
     expect(screen.getAllByTestId('genre-button')).toHaveLength(Object.values(Genres).length);
     expect(screen.getByText(/©/i)).toBeInTheDocument();
-    setTimeout(() => {
-      expect(screen.getAllByTestId('small-film-card')).toHaveLength(MAX_CARDS_COUNT_STEP);
-    }, 50);
+    expect(screen.getAllByTestId('small-film-card')).toHaveLength(MAX_CARDS_COUNT_STEP);
   });
 });

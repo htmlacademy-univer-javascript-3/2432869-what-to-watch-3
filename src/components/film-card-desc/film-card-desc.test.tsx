@@ -5,7 +5,7 @@ import { AuthStatus } from '../../consts';
 import FilmCardDesc from './film-card-desc';
 import { mockFilmsData } from '../../mocks/films-data';
 
-describe('Component: AddFavoriteButton', () => {
+describe('Component: FilmCardDesc', () => {
   const filmData = mockFilmsData[4];
 
   it('renders correctly', () => {

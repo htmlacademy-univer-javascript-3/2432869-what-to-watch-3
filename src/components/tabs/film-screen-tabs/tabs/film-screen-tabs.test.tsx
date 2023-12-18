@@ -5,7 +5,7 @@ import { mockFilmsData } from '../../../../mocks/films-data';
 import { mockReviewsData } from '../../../../mocks/reviews-data';
 import userEvent from '@testing-library/user-event';
 
-describe('Component: FilmScreenTabButton', () => {
+describe('Component: FilmScreenTabs', () => {
   const filmData = mockFilmsData[2];
 
   it('renders overview tab initialy', () => {

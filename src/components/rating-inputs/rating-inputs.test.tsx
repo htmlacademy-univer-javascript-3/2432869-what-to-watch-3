@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { Mock } from '@vitest/spy';
 import RatingInputs from './rating-inputs';
 
-describe('Component: RatingInpust', () => {
+describe('Component: RatingInputs', () => {
   let onRatingChange: Mock<[number], void>;
   let ratingWidth: number;
   beforeEach(() => {

@@ -1,13 +1,15 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { Genre } from '../../types/genre';
-import { store } from '../../store';
-import { State } from '../../types/state';
 import filterFilmsByGenre from '../../shared/filter-films-by-genre/filter-films-by-genre';
-import { NameSpace } from '../../consts';
+import { useAppSelector } from '..';
+import { getFilmsData } from '../../store/films-data/selectors';
+import { FilmShortData } from '../../types/film-short-data';
 
 const filmsByGenreSelector = createSelector([
-  (state: State, genre: Genre) => ({ filmsData: state[NameSpace.FilmsData].filmsData, genre })
-], ({ filmsData, genre }) => filmsData && filterFilmsByGenre(filmsData, genre));
+  (filmsData: FilmShortData[], genre: Genre) => ({ filmsData, genre })
+], ({ filmsData, genre }) => filterFilmsByGenre(filmsData, genre));
 
-export const useFilmsByGenre = (genre: Genre) => filmsByGenreSelector(store.getState(), genre);
-
+export function useFilmsByGenre(genre: Genre) {
+  const filmsData = useAppSelector(getFilmsData);
+  return filmsData && filmsByGenreSelector(filmsData, genre);
+}

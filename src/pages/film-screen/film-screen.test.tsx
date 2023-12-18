@@ -6,7 +6,7 @@ import FilmScreen from './film-screen';
 import { mockFilmsData } from '../../mocks/films-data';
 import { FilmTabsTitles } from '../../components/tabs/film-screen-tabs/tabs/film-screen-tabs';
 
-describe('Component: SmallFilmCards', () => {
+describe('Component: FilmScreen', () => {
   const filmData = mockFilmsData[6];
   const similarFilmsData = mockFilmsShortData.slice(4, 9);
 

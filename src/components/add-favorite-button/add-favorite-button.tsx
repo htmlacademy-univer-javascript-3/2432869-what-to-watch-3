@@ -5,6 +5,7 @@ import { AppRoutes } from '../../app-routes';
 import { postFavoriteFilmAction } from '../../store/api-actions';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import { getFavoriteFilmsCount, isCurrentFilmFavorite } from '../../store/favorite-films-data/selectors';
+import Spinner from '../spinner/spinner';
 
 type AddFavoriteButtonProps = {
   filmId: string;
@@ -47,7 +48,9 @@ export default function AddFavoriteButton({ filmId }: AddFavoriteButtonProps): J
           <use xlinkHref="#add"></use>
         </svg>}
       <span>My list</span>
-      <span className="film-card__count">{ favoriteFilmsCount }</span>
+      <span className="film-card__count">
+        { favoriteFilmsCount === undefined ? <Spinner size={8} /> : favoriteFilmsCount }
+      </span>
     </button>
   );
 }

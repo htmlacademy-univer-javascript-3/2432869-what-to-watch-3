@@ -3,7 +3,7 @@ import { withStore } from '../../../../utils/mock-component';
 import { mockFilmsData } from '../../../../mocks/films-data';
 import FilmDetails from './film-details';
 
-describe('Component: FilmOverview', () => {
+describe('Component: FilmDetails', () => {
   const filmData = mockFilmsData[5];
 
   it('renders correctly', () => {

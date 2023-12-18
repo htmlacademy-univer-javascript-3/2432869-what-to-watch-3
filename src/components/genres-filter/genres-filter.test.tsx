@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { render, screen } from '@testing-library/react';
 import { withStore } from '../../utils/mock-component';
-import { Genres, NameSpace } from '../../consts';
+import { Genres } from '../../consts';
 import GenresFilter from './genres-filter';
 import userEvent from '@testing-library/user-event';
+import { extractActionsTypes } from '../../utils/mocks';
+import { setGenre } from '../../store/genre-process/genre-process';
 
-describe('Component: GenreButton', () => {
+describe('Component: GenreFilter', () => {
   it('renders correctly', () => {
     const genres = Genres;
     const { withStoreComponent } = withStore(<GenresFilter genres={genres} />, {
@@ -20,16 +22,17 @@ describe('Component: GenreButton', () => {
   });
 
   it('dispatch "setGenre" when user click genre button', async () => {
-    const genre = Genres.Drama;
+    const expectedGenre = Genres.Drama;
     const { withStoreComponent, mockStore } = withStore(<GenresFilter genres={Genres} />, {
       Genre: { genre: Genres.Comedy }
     });
 
     render(withStoreComponent);
-    await userEvent.click(screen.getByText(genre));
+    await userEvent.click(screen.getByText(expectedGenre));
+    const actions = extractActionsTypes(mockStore.getActions());
 
-    setTimeout(() => {
-      expect(mockStore.getState()[NameSpace.Genre].genre).toBe(genre);
-    }, 50);
+    expect(actions).toEqual([
+      setGenre.type
+    ]);
   });
 });
