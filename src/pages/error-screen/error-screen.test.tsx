@@ -4,7 +4,7 @@ import { makeFakeStore } from '../../utils/mocks';
 import { ErrorCodesDesc, STANDART_ERROR_MESSAGE } from '../../consts';
 import ErrorScreen from './error-screen';
 
-describe('Component: UserBlock', () => {
+describe('Component: ErrorScreen', () => {
   it('renders correctly with state`s error code', () => {
     const errorCode = 404;
     const withHistoryComponent = withHistory(<ErrorScreen />);

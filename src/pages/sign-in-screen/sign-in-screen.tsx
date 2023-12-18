@@ -7,14 +7,17 @@ import { getAuthStatus } from '../../store/user-process/selectors';
 import { AuthStatus } from '../../consts';
 import { AppRoutes } from '../../app-routes';
 import Spinner from '../../components/spinner/spinner';
+import { useEffect } from 'react';
 
 export default function SignInScreen(): JSX.Element {
   const navigate = useNavigate();
   const authStatus = useAppSelector(getAuthStatus);
 
-  if (authStatus === AuthStatus.Auth) {
-    navigate(AppRoutes.Main.FullPath);
-  }
+  useEffect(() => {
+    if (authStatus === AuthStatus.Auth) {
+      navigate(AppRoutes.Main.FullPath);
+    }
+  }, [authStatus, navigate]);
 
   return (
     <div className="user-page">

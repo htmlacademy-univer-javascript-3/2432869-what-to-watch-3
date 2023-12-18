@@ -1,4 +1,5 @@
 export const MAX_CARDS_COUNT_STEP = 8;
+export const CHANGE_IMAGE_TO_VIDEO_TIME = 1000;
 
 export const STANDART_ERROR_MESSAGE = 'An error occured';
 

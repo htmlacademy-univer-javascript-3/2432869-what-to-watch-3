@@ -16,6 +16,7 @@ describe('Component: SmallFilmCard', () => {
   const history = createMemoryHistory();
 
   let withStoreComponent: JSX.Element;
+
   beforeEach(() => {
     const preparedComponent = withHistory(
       <SmallFilmCard {...mockFilm} hoveredCardId={undefined}
@@ -37,25 +38,5 @@ describe('Component: SmallFilmCard', () => {
     await userEvent.click(screen.getByRole('link'));
 
     expect(history.location.pathname).toBe(generatePath(AppRoutes.Film.FullPath, { id: filmId }));
-  });
-
-  it('replace film image to video when user is hovering card more than 1 second', async () => {
-    render(withStoreComponent);
-    await userEvent.hover(screen.getByRole('img'));
-
-    setTimeout(() => {
-      expect(onMouseEnter).toBeCalled();
-      expect(onMouseLeave).not.toBeCalled();
-      expect(screen.queryByRole('img')).not.toBeInTheDocument();
-      expect(screen.getByRole('video')).toBeInTheDocument();
-      userEvent.unhover(screen.getByRole('img'));
-    }, 1000);
-
-    setTimeout(() => {
-      expect(onMouseEnter).toBeCalledTimes(1);
-      expect(onMouseLeave).toBeCalled();
-      expect(screen.queryByRole('img')).toBeInTheDocument();
-      expect(screen.getByRole('video')).not.toBeInTheDocument();
-    }, 1200);
   });
 });

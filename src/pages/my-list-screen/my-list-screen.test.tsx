@@ -4,7 +4,7 @@ import { mockFilmsShortData } from '../../mocks/films-short-data';
 import MyListScreen from './my-list-screen';
 import { AuthStatus } from '../../consts';
 
-describe('Component: SmallFilmCards', () => {
+describe('Component: MyListScreen', () => {
   const mockFilms = mockFilmsShortData;
 
   it('renders correctly', () => {

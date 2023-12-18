@@ -38,6 +38,7 @@ describe('Component: PlayButton', () => {
 
     render(component);
     await userEvent.click(screen.getByRole('button'));
+
     expect(handlePause).toBeCalled();
   });
 });

@@ -3,6 +3,7 @@ import { AppRoutes } from '../../app-routes';
 import VideoPlayer from '../video-player/video-player';
 import { useState, useEffect } from 'react';
 import { TimeoutId } from '../../types/timeout-id';
+import { CHANGE_IMAGE_TO_VIDEO_TIME } from '../../consts';
 
 export type SmallFilmCardProps = {
   id: string;
@@ -25,7 +26,7 @@ export function SmallFilmCard({ id, previewImage, name, previewVideoLink, hovere
     if (id === hoveredCardId) {
       timeoutId = setTimeout(() => {
         setPlayTrailer(true);
-      }, 1000);
+      }, CHANGE_IMAGE_TO_VIDEO_TIME);
     } else {
       setPlayTrailer(false);
     }
@@ -45,9 +46,9 @@ export function SmallFilmCard({ id, previewImage, name, previewVideoLink, hovere
       data-testid={'small-film-card'}
     >
       <div onClick={() => navigate(linkPath)} className="small-film-card__image">
-        {playTrailer
-          ? <VideoPlayer source={previewVideoLink} play={playTrailer} autoPlay muted preload='auto' width="280" height="175" />
-          : <img src={previewImage} alt={name} width="280" height="175" /> }
+        <VideoPlayer source={previewVideoLink} poster={previewImage} play={playTrailer}
+          autoPlay muted preload='auto' width="280" height="175" showPosterAfterPause
+        />
       </div>
       <h3 className="small-film-card__title">
         <Link to={linkPath} className="small-film-card__link">{ name }</Link>

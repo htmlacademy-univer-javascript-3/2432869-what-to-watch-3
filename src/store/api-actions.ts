@@ -29,7 +29,7 @@ export const fetchFilmDataAction = createAsyncThunk<FilmData | unknown, string, 
       const response = await api.get<FilmData>(`${APIRoute.Films}/${id}`);
       dispatch(setIsCurrentFilmFavorite(response.data.isFavorite ?? false));
       return response.data;
-    } catch {
+    } catch (error) {
       dispatch(redirectToRoute(AppRoutes.Error.FullPath));
     }
   },

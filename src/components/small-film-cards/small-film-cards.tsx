@@ -12,18 +12,19 @@ export function SmallFilmCards({ filmsData, maxCardsCount = 100 }: SmallFilmCard
   const handleMouseEnter = useCallback((cardId: string | undefined) => setHoveredCardId(cardId), []);
   const handleMouseLeave = useCallback(() => handleMouseEnter(undefined), [handleMouseEnter]);
 
-  return (
-    <div className="catalog__films-list">
-      { filmsData.map((filmData: FilmShortData, index: number) =>
-        index < maxCardsCount && (
-          <SmallFilmCard
-            key={filmData.id}
-            hoveredCardId={hoveredCardId}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            {...filmData}
-          />
-        )) }
-    </div>
-  );
+  return filmsData.length
+    ? (
+      <div className="catalog__films-list">
+        { filmsData.map((filmData: FilmShortData, index: number) =>
+          index < maxCardsCount && (
+            <SmallFilmCard
+              key={filmData.id}
+              hoveredCardId={hoveredCardId}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              {...filmData}
+            />
+          )) }
+      </div>)
+    : (<h3>Фильмы не найдены</h3>);
 }
