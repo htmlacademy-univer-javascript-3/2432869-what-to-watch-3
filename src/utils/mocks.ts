@@ -1,4 +1,4 @@
-import { AuthStatus } from '../consts';
+import { ALL_GENRES, AuthStatus } from '../consts';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../services/api';
@@ -10,7 +10,7 @@ export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({
 
 export const makeFakeStore = (initialState?: Partial<State>): State => ({
   Error: { errorCode: undefined },
-  Genre: { genre: 'All genres' },
+  Genre: { genre: ALL_GENRES },
   FilmsData: { filmsData: [], similarFilmsData: [] },
   FavoriteFilmsData: { favoriteFilmsData: [], isCurrentFilmFavorite: false },
   ReviewsData: { reviewsData: [] },

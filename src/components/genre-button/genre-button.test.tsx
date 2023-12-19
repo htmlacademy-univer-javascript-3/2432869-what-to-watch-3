@@ -1,16 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import { withStore } from '../../utils/mock-component';
 import { GenreButton } from './genre-button';
-import { Genres } from '../../consts';
+import { genres } from '../../mocks/genres';
 import userEvent from '@testing-library/user-event';
+import { ALL_GENRES } from '../../consts';
 
 describe('Component: GenreButton', () => {
   const onClick = vi.fn();
 
   it('renders correctly when genre in state isn`t the same', () => {
-    const genre = Genres.Crime;
+    const genre = genres.Crime;
     const { withStoreComponent } = withStore(<GenreButton genre={genre} onClick={onClick} />, {
-      Genre: { genre: Genres['All genres'] }
+      Genre: { genre: ALL_GENRES }
     });
 
     render(withStoreComponent);
@@ -21,7 +22,7 @@ describe('Component: GenreButton', () => {
   });
 
   it('renders correctly when genre in state is the same', () => {
-    const genre = Genres.Horror;
+    const genre = genres.Horror;
     const { withStoreComponent } = withStore(<GenreButton genre={genre} onClick={onClick} />, {
       Genre: { genre: genre }
     });
@@ -34,7 +35,7 @@ describe('Component: GenreButton', () => {
   });
 
   it('handle user click', async () => {
-    const genre = Genres.Horror;
+    const genre = genres.Horror;
     const { withStoreComponent } = withStore(<GenreButton genre={genre} onClick={onClick} />, {
       Genre: { genre: genre }
     });

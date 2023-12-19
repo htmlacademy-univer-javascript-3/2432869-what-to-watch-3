@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../consts';
+import { ALL_GENRES, NameSpace } from '../../consts';
 import { Genre } from '../../types/genre';
 import { GenreProcessState } from '../../types/state';
 
 const initialState: GenreProcessState = {
-  genre: 'All genres',
+  genre: ALL_GENRES,
 };
 
 export const genreProcess = createSlice({

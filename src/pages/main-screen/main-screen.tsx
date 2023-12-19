@@ -1,4 +1,4 @@
-import GenresFilter, { GenresFilterProps } from '../../components/genres-filter/genres-filter';
+import GenresFilter from '../../components/genres-filter/genres-filter';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Spinner from '../../components/spinner/spinner';
@@ -10,9 +10,7 @@ import GenreFilmCards from '../../components/genre-film-cards/genre-film-cards';
 import { useEffect } from 'react';
 import { fetchPromoFilmDataAction } from '../../store/api-actions';
 
-export type MainScreenProps = GenresFilterProps;
-
-export default function MainScreen({ genres }: MainScreenProps): JSX.Element {
+export default function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const promoFilmData = useAppSelector(getPromoFilmData);
 
@@ -49,7 +47,7 @@ export default function MainScreen({ genres }: MainScreenProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresFilter genres={genres} />
+          <GenresFilter />
 
           <GenreFilmCards />
         </section>

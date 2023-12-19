@@ -1,10 +1,11 @@
-import { Genres } from '../../consts';
+import { ALL_GENRES } from '../../consts';
+import { genres } from '../../mocks/genres';
 import { genreProcess, setGenre } from './genre-process';
 
 describe('GenreProcess Slice', () => {
   it('returns initial state with empty action', () => {
     const emptyAction = { type: '' };
-    const expectedState = { genre: Genres.Comedy };
+    const expectedState = { genre: genres.Comedy };
 
     const result = genreProcess.reducer(expectedState, emptyAction);
 
@@ -13,7 +14,7 @@ describe('GenreProcess Slice', () => {
 
   it('returns default initial state with empty action', () => {
     const emptyAction = { type: '' };
-    const expectedState = { genre: Genres['All genres'] };
+    const expectedState = { genre: ALL_GENRES };
 
     const result = genreProcess.reducer(undefined, emptyAction);
 
@@ -21,8 +22,8 @@ describe('GenreProcess Slice', () => {
   });
 
   it('set genre with "setGenre" action', () => {
-    const expectedGenre = Genres.Horror;
-    const initialState = { genre: Genres['Kids & Family'] };
+    const expectedGenre = genres.Horror;
+    const initialState = { genre: genres['Kids & Family'] };
 
     const result = genreProcess.reducer(initialState, setGenre(expectedGenre));
 
