@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
 import { mockFilmsShortData } from '../../mocks/films-short-data';
-import { AuthStatus, Genres, MAX_CARDS_COUNT_STEP } from '../../consts';
+import { AuthStatus, MAX_CARDS_COUNT_STEP } from '../../consts';
+import { Genres } from "../../mocks/genres";
 import MainScreen from './main-screen';
 import { mockPromoFilmData } from '../../mocks/promo-film-data';
 

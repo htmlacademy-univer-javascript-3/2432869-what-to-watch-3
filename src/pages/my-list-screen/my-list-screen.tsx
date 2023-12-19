@@ -20,7 +20,9 @@ export default function MyListScreen(): JSX.Element {
     <div className="user-page">
       <Header className='user-page__head'>
         <h1 className="page-title user-page__title">My list
-          <span className="user-page__film-count">{ favoriteFilmsCount }</span>
+          <span className="user-page__film-count">
+            { favoriteFilmsCount === undefined ? <Spinner size={8} /> : favoriteFilmsCount }
+          </span>
         </h1>
       </Header>
 

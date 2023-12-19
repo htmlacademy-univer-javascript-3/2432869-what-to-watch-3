@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
 import { mockFilmsShortData } from '../../mocks/films-short-data';
-import { Genres, MAX_CARDS_COUNT_STEP } from '../../consts';
+import { ALL_GENRES, MAX_CARDS_COUNT_STEP } from '../../consts';
+import { genres } from '../../mocks/genres';
 import GenreFilmCards from './genre-film-cards';
 import userEvent from '@testing-library/user-event';
 import filterFilmsByGenre from '../../shared/filter-films-by-genre/filter-films-by-genre';
@@ -16,7 +17,7 @@ describe('Component: GenreFilmCards', () => {
   it('renders correctly', () => {
     const { withStoreComponent } = withStore(preparedComponent, {
       FilmsData: { filmsData: mockFilmsShortData },
-      Genre: { genre: Genres['All genres'] },
+      Genre: { genre: ALL_GENRES },
     });
 
     render(withStoreComponent);
@@ -29,7 +30,7 @@ describe('Component: GenreFilmCards', () => {
     const expectedCardsCount = MAX_CARDS_COUNT_STEP + 1;
     const { withStoreComponent } = withStore(preparedComponent, {
       FilmsData: { filmsData: mockFilmsShortData.slice(0, expectedCardsCount) },
-      Genre: { genre: Genres['All genres'] },
+      Genre: { genre: ALL_GENRES },
     });
 
     render(withStoreComponent);
@@ -42,7 +43,7 @@ describe('Component: GenreFilmCards', () => {
   it('hide "show more button" when there are no more hidden cards', async () => {
     const { withStoreComponent } = withStore(preparedComponent, {
       FilmsData: { filmsData: mockFilmsShortData.slice(0, MAX_CARDS_COUNT_STEP + 1) },
-      Genre: { genre: Genres['All genres'] },
+      Genre: { genre: ALL_GENRES },
     });
 
     render(withStoreComponent);
@@ -52,7 +53,7 @@ describe('Component: GenreFilmCards', () => {
   });
 
   it('filter film cards by genre in state', () => {
-    const genre = Genres.Drama;
+    const genre = genres.Drama;
     const { withStoreComponent } = withStore(preparedComponent, {
       FilmsData: { filmsData: mockFilmsShortData },
       Genre: { genre: genre },

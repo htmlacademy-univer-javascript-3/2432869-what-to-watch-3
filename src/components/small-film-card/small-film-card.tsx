@@ -47,7 +47,7 @@ export function SmallFilmCard({ id, previewImage, name, previewVideoLink, hovere
     >
       <div onClick={() => navigate(linkPath)} className="small-film-card__image">
         <VideoPlayer source={previewVideoLink} poster={previewImage} play={playTrailer}
-          autoPlay muted preload='auto' width="280" height="175" showPosterAfterPause
+          muted preload='none' width="280" height="175" showPosterAfterPause
         />
       </div>
       <h3 className="small-film-card__title">

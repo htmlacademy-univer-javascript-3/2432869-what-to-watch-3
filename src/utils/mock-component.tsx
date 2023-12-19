@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import { Action } from 'redux';
 import { AppThunkDispatch } from './mocks';
 import { Provider } from 'react-redux';
+import { PropsWithChildren } from 'react';
 
 export function withHistory(component: JSX.Element, history?: MemoryHistory) {
   const memoryHistory = history ?? createMemoryHistory();
@@ -37,4 +38,19 @@ export function withStore(component: JSX.Element, initialState: Partial<State> =
     mockStore,
     mockAxiosAdapter,
   });
+}
+
+export function createStoreWrapper(initialState: Partial<State>) {
+  return function storeWrapper({ children }: PropsWithChildren): JSX.Element {
+    const axios = createAPI();
+    const middleware = [thunk.withExtraArgument(axios)];
+    const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
+    const mockStore = mockStoreCreator(initialState);
+
+    return (
+      <Provider store={mockStore}>
+        { children }
+      </Provider>
+    );
+  };
 }
