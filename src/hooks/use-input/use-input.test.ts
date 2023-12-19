@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import useInput from './use-input';
 
-describe('Hook: useUserAnswers', () => {
+describe('Hook: useInput', () => {
   it('returns array with 4 elements', () => {
 
     const { result } = renderHook(() => useInput(() => true, 'Error'));

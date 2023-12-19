@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { Genres } from './consts';
 import { checkAuthAction, fetchFilmsDataAction } from './store/api-actions';
 import browserHistory from './browser-history';
 import HistoryRouter from './components/history-router/history-router';
@@ -22,7 +21,6 @@ root.render(
         <App
           maxSimilarCardsCount={4}
           ratingWidth={10}
-          genres={Genres}
         />
       </HistoryRouter>
     </Provider>

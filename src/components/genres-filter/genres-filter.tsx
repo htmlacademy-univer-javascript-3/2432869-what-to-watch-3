@@ -1,25 +1,29 @@
 import { useCallback, useEffect } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { Genre, Genres } from '../../types/genre';
+import { Genre } from '../../types/genre';
 import { setGenre } from '../../store/genre-process/genre-process';
 import { GenreButton } from '../genre-button/genre-button';
-import { Genres as GenreValues } from '../../consts';
+import { ALL_GENRES } from '../../consts';
+import { useGenresByFilms } from '../../hooks/use-genres-by-films/use-genres-by-films';
 
-export type GenresFilterProps = {
-  genres: Genres;
-};
-
-export default function GenresFilter({ genres }: GenresFilterProps): JSX.Element {
+export default function GenresFilter(): JSX.Element {
   const dispatch = useAppDispatch();
   const handleButtonClick = useCallback((genre: Genre) => dispatch(setGenre(genre)), [dispatch]);
 
+  const genres = useGenresByFilms();
+
   useEffect(() => () => {
-    dispatch(setGenre(GenreValues['All genres']));
+    dispatch(setGenre(ALL_GENRES));
   }, [dispatch]);
 
   return (
     <ul className="catalog__genres-list">
-      {Object.values(genres).map((genre) => (
+      <GenreButton
+        key={ALL_GENRES}
+        genre={ALL_GENRES}
+        onClick={handleButtonClick}
+      />
+      {genres.map((genre: Genre, index) => index < 9 && (
         <GenreButton
           key={genre}
           genre={genre}

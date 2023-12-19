@@ -3,7 +3,7 @@ import { MemoryHistory, createMemoryHistory } from 'history';
 import App from './app';
 import { withHistory, withStore } from '../../utils/mock-component';
 import { AppRoutes } from '../../app-routes';
-import { ErrorCodesDesc, Genres } from '../../consts';
+import { ALL_GENRES, ErrorCodesDesc } from '../../consts';
 import { AuthStatus } from '../../consts';
 import { mockPromoFilmData } from '../../mocks/promo-film-data';
 import { mockFilmsShortData } from '../../mocks/films-short-data';
@@ -17,11 +17,11 @@ describe('Application Routing', () => {
   });
 
   it('should render "MainScreen" when user navigate to "/"', () => {
-    const withHistoryComponent = withHistory(<App genres={Genres} maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
+    const withHistoryComponent = withHistory(<App maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, {
       FilmsData: { promoFilmData: mockPromoFilmData, filmsData: mockFilmsShortData },
       FavoriteFilmsData: { favoriteFilmsData: mockFilmsShortData, isCurrentFilmFavorite: false },
-      Genre: { genre: Genres['All genres'] },
+      Genre: { genre: ALL_GENRES },
       User: { authStatus: AuthStatus.Auth },
     });
     mockHistory.push(AppRoutes.Main.FullPath);
@@ -36,7 +36,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "SignInScreen" when user navigate to "/login"', () => {
-    const withHistoryComponent = withHistory(<App genres={Genres} maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
+    const withHistoryComponent = withHistory(<App maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, {
       User: { authStatus: AuthStatus.NoAuth }
     });
@@ -50,7 +50,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "MyListScreen" when user navigate to "/mylist"', () => {
-    const withHistoryComponent = withHistory(<App genres={Genres} maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
+    const withHistoryComponent = withHistory(<App maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, {
       FavoriteFilmsData: { favoriteFilmsData: mockFilmsShortData, isCurrentFilmFavorite: false },
       User: { authStatus: AuthStatus.Auth },
@@ -65,7 +65,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "FilmScreen" when user navigate to "/films/:id"', () => {
-    const withHistoryComponent = withHistory(<App genres={Genres} maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
+    const withHistoryComponent = withHistory(<App maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent,{
       FilmsData: { filmData: mockFilmsData[4], similarFilmsData: mockFilmsShortData },
       FavoriteFilmsData: { favoriteFilmsData: mockFilmsShortData, isCurrentFilmFavorite: false },
@@ -82,7 +82,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "AddReviewScreen" when user navigate to "/films/:id/review"', () => {
-    const withHistoryComponent = withHistory(<App genres={Genres} maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
+    const withHistoryComponent = withHistory(<App maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, {
       FilmsData: { filmData: mockFilmsData[3] },
       User: { authStatus: AuthStatus.Auth },
@@ -97,7 +97,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "PlayerScreen" when user navigate to "/player/:id"', () => {
-    const withHistoryComponent = withHistory(<App genres={Genres} maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
+    const withHistoryComponent = withHistory(<App maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, {
       FilmsData: { filmData: mockFilmsData[7] },
     });
@@ -114,7 +114,7 @@ describe('Application Routing', () => {
 
   it('should render "ErrorScreen" when user navigate to non-existent route', () => {
     const errorCode = 404;
-    const withHistoryComponent = withHistory(<App genres={Genres} maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
+    const withHistoryComponent = withHistory(<App maxSimilarCardsCount={4} ratingWidth={10} />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, {
       Error: { errorCode: errorCode }
     });
